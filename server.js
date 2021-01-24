@@ -6,10 +6,6 @@ const fileupload = require('express-fileupload');
 const cookieParser = require('cookie-parser');
 const connectDB = require('./config/db');
 const errorHandler = require('./middleware/error');
-// const swaggerUI = require("swagger-ui-express");
-const swaggerJsDoc = require("swagger-jsdoc");
-// const swaggerOptions = require("./config/swaggerConfig");
-// const swaggerSpec = swaggerJsDoc(swaggerOptions);
 
 // Load env variables
 dotenv.config({ path: './config/config.env' });
@@ -23,7 +19,7 @@ connectDB();
 // const menu = require('./routes/menu');
 // const sauces = require('./routes/sauces');
 // const toppings = require('./routes/toppings');
-// const auth = require('./routes/auth');
+const auth = require('./routes/auth');
 
 const app = express();
 
@@ -73,7 +69,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.use('/menu', menu);
 // app.use('/sauces', sauces);
 // app.use('/toppings', toppings);
-// app.use('/auth', auth);
+app.use('/auth', auth);
 
 app.use(errorHandler);
 
