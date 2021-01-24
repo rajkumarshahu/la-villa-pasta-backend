@@ -14,7 +14,7 @@ dotenv.config({ path: './config/config.env' });
 connectDB();
 
 // Route files
-// const pastas = require('./routes/pastas');
+const pastas = require('./routes/pastas');
 // const orders = require('./routes/orders');
 // const menu = require('./routes/menu');
 // const sauces = require('./routes/sauces');
@@ -64,7 +64,7 @@ app.use(fileupload());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Mount routers
-// app.use('/pastas', pastas);
+app.use('/pastas', pastas);
 // app.use('/orders', orders);
 // app.use('/menu', menu);
 // app.use('/sauces', sauces);

@@ -5,7 +5,7 @@ const SauceSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please add a title'],
         trim: true,
-        maxlength: [20, 'title can not be more than 20 character'],
+        maxlength: [40, 'title can not be more than 40 character'],
     },
     description: {
         type: String,
