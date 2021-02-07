@@ -7,7 +7,7 @@ const dotenv = require('dotenv');
 dotenv.config({ path: './config/config.env' });
 
 // Load models
-const Pasta = require('./models/Pasta');
+const Item = require('./models/Item');
 // const Sauce = require('./models/Sauce');
 
 // Connect to DB
@@ -19,7 +19,7 @@ mongoose.connect(process.env.MONGO_URI, {
 });
 
 // Read JSON files
-const pastas = JSON.parse(
+const items = JSON.parse(
 	fs.readFileSync(`${__dirname}/_data/pastas.json`, 'utf-8')
 );
 
@@ -30,7 +30,7 @@ const pastas = JSON.parse(
 // Import into DB
 const importData = async () => {
 	try {
-		await Pasta.create(pastas);
+		await Item.create(items);
 		// await Sauce.create(records);
 		console.log('Data Imported...'.green.inverse);
 		process.exit();
@@ -42,7 +42,7 @@ const importData = async () => {
 // Delete data
 const deleteData = async () => {
 	try {
-		await Pasta.deleteMany();
+		await Item.deleteMany();
 		//await Sauce.deleteMany();
 		console.log('Data Destroyed...'.red.inverse);
 		process.exit();

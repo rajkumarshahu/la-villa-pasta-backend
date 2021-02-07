@@ -1,23 +1,31 @@
 const mongoose = require('mongoose');
 
-const ToppingSchema = new mongoose.Schema({
+const ComboSchema = new mongoose.Schema({
     title: {
         type: String,
         required: [true, 'Please add a title'],
         trim: true,
-        maxlength: [40, 'title can not be more than 40 character'],
+        maxlength: [50, 'title can not be more than 50 character'],
     },
     description: {
         type: String,
         trim: true,
     },
-    price: {
+    unitPrice: {
         type: Number,
-        required: [true, 'Please add price']
+        trim: true,
     },
+    // itemType: {
+    //     type: mongoose.Schema.Type.ObjectId,
+    //     ref: 'item'
+    // },
     image: {
         type: String,
         default: 'no-photo.jpg'
+    },
+    isActive: {
+        type: Boolean,
+        default: 'true'
     },
     createdAt: {
         type: Date,
@@ -25,4 +33,4 @@ const ToppingSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('Topping', ToppingSchema);
+module.exports = mongoose.model('Combo', ComboSchema);

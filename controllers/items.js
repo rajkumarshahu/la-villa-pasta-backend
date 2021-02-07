@@ -1,81 +1,83 @@
-const Pasta = require('../models/Pasta');
+const Item = require('../models/Item');
 const path = require('path');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 
-//@desc        Get all pastas
-//@route       GET /pastas
+//@desc        Get all item
+//@route       GET /items
 //@access      Public
-exports.getPastas = asyncHandler(async (req, res, next) => {
-	const pastas = await Pasta.find().populate('records');
+exports.getItems = asyncHandler(async (req, res, next) => {
+	const items = await Item.find();
+	//.populate('records')
 	res
 		.status(200)
-		.json({ success: true, pastaCount: pastas.length, data: pastas });
+		.json({ success: true, itemCount: items.length, data: items });
 });
 
-//@desc        Get single pasta
-//@route       GET /pastas/:id
+//@desc        Get single item
+//@route       GET /items/:id
 //@access      Public
-exports.getPasta = asyncHandler(async (req, res, next) => {
-	const pasta = await Pasta.findById(req.params.id).populate('pastas');
-	if (!pasta) {
+exports.getItem = asyncHandler(async (req, res, next) => {
+	const item = await Item.findById(req.params.id)
+	//.populate('pastas');
+	if (!item) {
 		return next(
-			new ErrorResponse(`Pasta not found with id of ${req.params.id}`, 404)
+			new ErrorResponse(`Item not found with id of ${req.params.id}`, 404)
 		);
 	}
-	res.status(200).json({ success: true, data: pasta });
+	res.status(200).json({ success: true, data: item });
 });
 
-//@desc        Add new pasta
-//@route       POST /pastas
+//@desc        Add new item
+//@route       POST /items
 //@access      Private
-exports.createPasta = asyncHandler(async (req, res, next) => {
-	const pasta = await Pasta.create(req.body);
+exports.createItem = asyncHandler(async (req, res, next) => {
+	const item = await Item.create(req.body);
 	res.status(201).json({
 		success: true,
-		data: pasta,
+		data: item,
 	});
 });
 
-//@desc        Update pasta
-//@route       PUT /pastas/:id
+//@desc        Update item
+//@route       PUT /items/:id
 //@access      Private
-exports.updatePasta = asyncHandler(async (req, res, next) => {
-	const pasta = await Pasta.findByIdAndUpdate(req.params.id, req.body, {
+exports.updateItem = asyncHandler(async (req, res, next) => {
+	const item = await Item.findByIdAndUpdate(req.params.id, req.body, {
 		new: true,
 		runValidators: true,
 	});
-	if (!pasta) {
+	if (!item) {
 		return next(
 			new ErrorResponse(`Pasta not found with id of ${req.params.id}`, 404)
 		);
 	}
-	res.status(200).json({ success: true, data: pasta });
+	res.status(200).json({ success: true, data: item });
 });
 
-//@desc        Delete pasta
-//@route       DELETE /pastas/:id
+//@desc        Delete item
+//@route       DELETE /items/:id
 //@access      Private
-exports.deletePasta = asyncHandler(async (req, res, next) => {
-	const pasta = await Pasta.findById(req.params.id);
-	if (!pasta) {
+exports.deleteItem = asyncHandler(async (req, res, next) => {
+	const item = await Item.findById(req.params.id);
+	if (!item) {
 		return next(
 			new ErrorResponse(`Pasta not found with id of ${req.params.id}`, 404)
 		);
 	}
-	pasta.remove();
+	item.remove();
 	res.status(200).json({ success: true, data: {} });
 });
 
 // @desc    Upload photo of a pasta
 // @route   PUT /pastas/:id/photo
 // @access  Private
-exports.pastaPhotoUpload = asyncHandler(async (req, res, next) => {
-	const pasta = await Pasta.findById(req.params.id);
+exports.itemPhotoUpload = asyncHandler(async (req, res, next) => {
+	const item = await Item.findById(req.params.id);
 
-	if (!pasta) {
+	if (!item) {
 		return next(
-			new ErrorResponse(`Pasta not found with id of ${req.params.id}`, 404)
+			new ErrorResponse(`Item not found with id of ${req.params.id}`, 404)
 		);
 	}
 
@@ -101,7 +103,7 @@ exports.pastaPhotoUpload = asyncHandler(async (req, res, next) => {
 	}
 
 	// Create custom filename
-	file.name = `photo_${pasta._id}${path.parse(file.name).ext}`;
+	file.name = `photo_${item._id}${path.parse(file.name).ext}`;
 
 	// Move the file to upload path
 	file.mv(`${process.env.FILE_UPLOAD_PATH}/${file.name}`, async (err) => {
@@ -110,7 +112,7 @@ exports.pastaPhotoUpload = asyncHandler(async (req, res, next) => {
 			return next(new ErrorResponse(`Problem with file upload`, 500));
 		}
 
-		const pasta = await Pasta.findByIdAndUpdate(req.params.id, {
+		const pasta = await Item.findByIdAndUpdate(req.params.id, {
 			photo: file.name,
 		});
 

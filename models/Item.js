@@ -1,19 +1,23 @@
 const mongoose = require('mongoose');
 
-const SauceSchema = new mongoose.Schema({
+const ItemSchema = new mongoose.Schema({
     title: {
         type: String,
         required: [true, 'Please add a title'],
         trim: true,
-        maxlength: [40, 'title can not be more than 40 character'],
+        maxlength: [50, 'title can not be more than 50 character'],
     },
     description: {
         type: String,
         trim: true,
     },
-    price: {
+    unitPrice: {
         type: Number,
-        required: [true, 'Please add price']
+        trim: true,
+    },
+    type: { // Salad, drink, dessert
+        type: String,
+        enum: ['pasta', 'sauce', 'topping', 'salad', 'drink', 'dessert'],
     },
     image: {
         type: String,
@@ -25,4 +29,4 @@ const SauceSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('Sauce', SauceSchema);
+module.exports = mongoose.model('Item', ItemSchema);

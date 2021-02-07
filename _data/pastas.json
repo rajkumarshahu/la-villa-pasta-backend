@@ -3,36 +3,42 @@
         "_id": "600cd1d7e3a5487228eb112c",
         "title": "Shrimp Fettuccine Alfredo",
         "description": "Fettuccine alfredo is one of life's greatest comfort foods. It's creamy, cheesy, carb-y, and super super flavorful. We especially love this version because the shrimp adds lots of extra flavor and some lean protein to boot!",
-        "price": 15.00
+        "unitPrice": 1.00,
+        "type": "sauce"
     },
     {
         "_id": "600ce05917492a7b607a33cd",
         "title": "Penne Alla Vodka",
         "description": "his is the best vodka sauce any of us in the test kitchen have ever had. It's creamy but bright. The secret: tomato paste. Yep, the lack of canned (crushed, pureed, or whole) tomatoes is no mistake. Tomato paste has a more concentrated flavor, and texture-wise, it makes for a smoother, almost velvety sauce. To make sure that each piece of pasta is coated, we like to stir the pasta directly into the sauce while it's still in the skillet before adding the last bit of Parmesan.",
-        "price": 10.00
+        "unitPrice": 2.00,
+        "type": "topping"
     },
     {
         "_id": "600d960090ba1c1fc691e7be",
         "title": "Spaghetti and Meatballs",
         "description": "Making your sauce is always better—it's cheaper and so much more flavorful. This one comes together in about 15 minutes and is the perfect accompaniment to the big garlicky meatballs.",
-        "price": 17.00
+        "unitPrice": 1.50,
+        "type": "salad"
     },
     {
         "_id": "600dcc9ea62e034984f3ea6c",
         "title": "Spaghetti Carbonara",
         "description": "When you're craving a comfort food, nothing—I repeat, NOTHING—will cure you like creamy carbonara.",
-        "price": 11.99
+        "unitPrice": 15.99,
+        "type": "pasta"
     },
     {
         "_id": "600dcd315bf50d4a14c2fa56",
         "title": "Baked Mostaccioli",
         "description": "Mostaccioli is a hearty baked pasta that's perfect for a weeknight dinner. Essentially an easier lasagna made with penne. Top it with plenty of cheese and you'll soon have a new favorite to add to the rotation.",
-        "price": 16.99
+        "unitPrice": 5.00,
+        "type": "dessert"
     },
     {
         "_id": "600dcfebe08b694a67656dfd",
         "title": "Cacio e Pepe Potato Gnocchi",
         "description": "We tossed our gnocchi in plenty of Parmesan and butter for a simple Cacio e Pepe vibe, but we also have a Tuscan Butter Gnocchi that we dream about regularly.",
-        "price": 10.99
+        "unitPrice": 3.99,
+        "type": "drink"
     }
 ]

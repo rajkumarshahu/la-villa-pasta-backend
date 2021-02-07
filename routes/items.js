@@ -1,12 +1,12 @@
 const express = require('express');
 const {
-	getPastas,
-	getPasta,
-	createPasta,
-	updatePasta,
-    deletePasta,
-    pastaPhotoUpload
-} = require('../controllers/pastas');
+	getItems,
+	getItem,
+	createItem,
+	updateItem,
+    deleteItem,
+    itemPhotoUpload
+} = require('../controllers/items');
 
 
 
@@ -18,19 +18,19 @@ const { protect, authorize } = require('../middleware/auth');
 // Re-route into other resource routers
 //router.use('/:patientId/records', recordRouter);
 
-router.route('/:id/photo').put(protect, authorize('admin'), pastaPhotoUpload);
+router.route('/:id/photo').put(protect, authorize('admin'), itemPhotoUpload);
 
 router
     .route('/')
-    .get(getPastas)
+    .get(getItems)
     .post(
        protect, authorize('admin'),
-        createPasta)
+        createItem)
 
 router
     .route('/:id')
-    .get(getPasta)
-    .put(protect, authorize('admin'), updatePasta)
-    .delete(protect, authorize('admin'), deletePasta);
+    .get(getItem)
+    .put(protect, authorize('admin'), updateItem)
+    .delete(protect, authorize('admin'), deleteItem);
 
 module.exports = router;
