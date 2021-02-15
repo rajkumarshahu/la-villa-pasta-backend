@@ -15,10 +15,10 @@ const ComboSchema = new mongoose.Schema({
         type: Number,
         trim: true,
     },
-    // itemType: {
-    //     type: mongoose.Schema.Type.ObjectId,
-    //     ref: 'item'
-    // },
+    itemType:  { // Salad, drink, dessert
+        type: String,
+        enum: ['pasta', 'sauce', 'topping', 'salad', 'drink', 'dessert'],
+    },
     image: {
         type: String,
         default: 'no-photo.jpg'

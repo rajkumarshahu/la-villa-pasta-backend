@@ -17,6 +17,14 @@ const UserSchema = new mongoose.Schema({
 			'Please add a valid email',
 		],
 	},
+	address: {
+		streetNumber: {type: Number},
+		streetName: { type: String },
+		apartmentNumber: { type: Number },
+		city: {type: String},
+		province: {type: String},
+		postalCode: {type: String}
+	},
 	role: {
 		type: String,
 		enum: ['admin', 'customer'],
@@ -29,7 +37,8 @@ const UserSchema = new mongoose.Schema({
 		select: false, // this way will not return the password when we use API to get the user
 	},
 	cashBackAmount: {
-		type: Number
+		type: Number,
+		default: 0.0
 	},
 	resetPasswordToken: String,
 	resetPasswordExpire: Date,
@@ -37,7 +46,9 @@ const UserSchema = new mongoose.Schema({
 		type: Date,
 		default: Date.now,
 	},
-});
+}
+
+);
 
 // Encrypt password using bcrypt
 UserSchema.pre('save', async function (next) {
@@ -59,5 +70,7 @@ UserSchema.methods.getSignedJwtToken = function () {
 UserSchema.methods.matchPassword = async function (enteredPassword) {
 	return await bcrypt.compare(enteredPassword, this.password);
 };
+
+
 
 module.exports = mongoose.model('User', UserSchema);

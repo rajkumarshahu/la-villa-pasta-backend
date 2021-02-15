@@ -12,16 +12,23 @@
 - Rename `config/config copy.env` to `config/config.env`
 - Configure `config/config.env` with your `MONGO_URI`
 
-```cd la-villa-pasta-backend
- npm install (to install dependencies)
- npm run dev (to start development server)
+```--------------------------------------------
+    cd la-villa-pasta-backend
+    npm install (to install dependencies)
+    npm run dev (to start development server)
  ```
 
 ## Seeding Data in Database
 
+```--------------------------------------------
+    node seeder -d (To delete all data from DB)
+    node seeder -i (To import data into DB)
 ```
-node seeder -d (To delete all data from DB)
-node seeder -i (To import data into DB)
+
+## Running Tests
+
+```--------------------------------------------
+    npm run test
 ```
 
 ## Technology Used

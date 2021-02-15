@@ -20,7 +20,7 @@ mongoose.connect(process.env.MONGO_URI, {
 
 // Read JSON files
 const items = JSON.parse(
-	fs.readFileSync(`${__dirname}/_data/pastas.json`, 'utf-8')
+	fs.readFileSync(`${__dirname}/_data/items.json`, 'utf-8')
 );
 
 // const sauces = JSON.parse(

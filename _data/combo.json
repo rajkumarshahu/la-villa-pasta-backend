@@ -1,0 +1,14 @@
+[
+    {
+        "title": "Combo 1",
+        "description": "Buy pasta, veg, nonveg, sause and drink for $20",
+        "unitPrice": 20,
+        "itemType": ["pasta","sauce","topping","drink"]
+    },
+    {
+        "title": "Combo 2",
+        "description": "Buy pasta, nonveg, sause and drink for $15",
+        "unitPrice": 15.00,
+        "itemType": ["pasta","sauce","topping","drink"]
+    }
+]

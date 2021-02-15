@@ -9,14 +9,16 @@ const User = require('../models/User');
 // @access  Public
 exports.register = asyncHandler(async (req, res, next) => {
 	// Sending data on the body
-	const { name, email, password, role } = req.body;
+	const { name, email, address, password, role, cashBackAmount } = req.body;
 
 	// Create user
 	const user = await User.create({
 		name,
 		email,
+		address,
 		password,
 		role,
+		cashBackAmount
 	});
 
 	sendTokenResponse(user, 200, res);

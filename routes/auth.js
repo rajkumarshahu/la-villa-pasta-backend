@@ -1,4 +1,3 @@
-
 const express = require('express');
 const {
 	register,
@@ -6,7 +5,6 @@ const {
 	logout,
 	getMe,
 } = require('../controllers/auth');
-
 
 const router = express.Router();
 

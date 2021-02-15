@@ -15,7 +15,7 @@ connectDB();
 
 // Route files
 const items = require('./routes/items');
-// const orders = require('./routes/orders');
+const orders = require('./routes/orders');
 const auth = require('./routes/auth');
 
 const app = express();
@@ -61,7 +61,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Mount routers
 app.use('/items', items);
-// app.use('/orders', orders);
+app.use('/orders', orders);
 // app.use('/menu', menu);
 // app.use('/sauces', sauces);
 // app.use('/toppings', toppings);
