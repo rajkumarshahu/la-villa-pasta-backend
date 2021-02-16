@@ -6,6 +6,7 @@ const fileupload = require('express-fileupload');
 const cookieParser = require('cookie-parser');
 const connectDB = require('./config/db');
 const errorHandler = require('./middleware/error');
+const cors = require('cors');
 
 // Load env variables
 dotenv.config({ path: './config/config.env' });
@@ -17,6 +18,7 @@ connectDB();
 const items = require('./routes/items');
 const orders = require('./routes/orders');
 const auth = require('./routes/auth');
+const users = require('./routes/users');
 
 const app = express();
 
@@ -56,16 +58,17 @@ app.use(logger);
 // File uploading
 app.use(fileupload());
 
+// Enable CORS
+app.use(cors());
+
 // Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Mount routers
 app.use('/items', items);
 app.use('/orders', orders);
-// app.use('/menu', menu);
-// app.use('/sauces', sauces);
-// app.use('/toppings', toppings);
 app.use('/auth', auth);
+app.use('/users', users);
 
 app.use(errorHandler);
 

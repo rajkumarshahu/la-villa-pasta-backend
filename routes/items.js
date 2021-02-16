@@ -9,8 +9,11 @@ const {
 } = require('../controllers/items');
 
 
+const Item = require('../models/Item')
 
 const router = express.Router();
+
+const advancedResults = require('../middleware/advancedResults');
 
 // Protect and authorize middlewares
 const { protect, authorize } = require('../middleware/auth');
@@ -22,7 +25,7 @@ router.route('/:id/photo').put(protect, authorize('admin'), itemPhotoUpload);
 
 router
     .route('/')
-    .get(getItems)
+    .get(advancedResults(Item, ''), getItems)
     .post(
        protect, authorize('admin'),
         createItem)

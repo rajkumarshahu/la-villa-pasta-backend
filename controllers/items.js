@@ -11,13 +11,14 @@ exports.getItems = asyncHandler(async (req, res, next) => {
 	//.populate('records')
 	res
 		.status(200)
-		.json({ success: true, itemCount: items.length, data: items });
+		.json(res.advancedResults);
 });
 
 //@desc        Get single item
 //@route       GET /items/:id
 //@access      Public
 exports.getItem = asyncHandler(async (req, res, next) => {
+
 	const item = await Item.findById(req.params.id)
 	//.populate('pastas');
 	if (!item) {
@@ -32,6 +33,10 @@ exports.getItem = asyncHandler(async (req, res, next) => {
 //@route       POST /items
 //@access      Private
 exports.createItem = asyncHandler(async (req, res, next) => {
+
+	// Add user to req,body
+	req.body.user = req.user.id;
+
 	const item = await Item.create(req.body);
 	res.status(201).json({
 		success: true,
@@ -49,7 +54,7 @@ exports.updateItem = asyncHandler(async (req, res, next) => {
 	});
 	if (!item) {
 		return next(
-			new ErrorResponse(`Pasta not found with id of ${req.params.id}`, 404)
+			new ErrorResponse(`Item not found with id of ${req.params.id}`, 404)
 		);
 	}
 	res.status(200).json({ success: true, data: item });
@@ -70,7 +75,7 @@ exports.deleteItem = asyncHandler(async (req, res, next) => {
 });
 
 // @desc    Upload photo of a pasta
-// @route   PUT /pastas/:id/photo
+// @route   PUT /items/:id/photo
 // @access  Private
 exports.itemPhotoUpload = asyncHandler(async (req, res, next) => {
 	const item = await Item.findById(req.params.id);
@@ -80,6 +85,16 @@ exports.itemPhotoUpload = asyncHandler(async (req, res, next) => {
 			new ErrorResponse(`Item not found with id of ${req.params.id}`, 404)
 		);
 	}
+
+	// Make sure user is admin
+	if (item.user.toString() !== req.user.id && req.user.role !== 'admin') {
+		return next(
+		  new ErrorResponse(
+			`User ${req.params.id} is not authorized to update this item`,
+			401
+		  )
+		);
+	  }
 
 	if (!req.files) {
 		return next(new ErrorResponse(`Please upload a file`, 400));
@@ -106,15 +121,13 @@ exports.itemPhotoUpload = asyncHandler(async (req, res, next) => {
 	file.name = `photo_${item._id}${path.parse(file.name).ext}`;
 
 	// Move the file to upload path
-	file.mv(`${process.env.FILE_UPLOAD_PATH}/${file.name}`, async (err) => {
+	file.mv(`${process.env.FILE_UPLOAD_PATH}/${file.name}`, async err => {
 		if (err) {
 			console.error(err);
 			return next(new ErrorResponse(`Problem with file upload`, 500));
 		}
 
-		const pasta = await Item.findByIdAndUpdate(req.params.id, {
-			photo: file.name,
-		});
+		await Item.findByIdAndUpdate(req.params.id, { photo: file.name });
 
 		res.status(200).json({
 			success: true,
