@@ -67,7 +67,7 @@ exports.deleteItem = asyncHandler(async (req, res, next) => {
 	const item = await Item.findById(req.params.id);
 	if (!item) {
 		return next(
-			new ErrorResponse(`Pasta not found with id of ${req.params.id}`, 404)
+			new ErrorResponse(`Item not found with id of ${req.params.id}`, 404)
 		);
 	}
 	item.remove();
