@@ -764,7 +764,7 @@
     },
     {
       "name": "Authentication",
-      "description": "Routes for user authentication including register, login, reset password...."
+      "description": "Routes for user authentication including register and login.."
     },
     {
       "name": "Users",

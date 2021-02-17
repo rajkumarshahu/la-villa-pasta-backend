@@ -537,7 +537,6 @@ tags:
     description: CRUD Functionality for Items
   - name: Authentication
     description: >-
-      Routes for user authentication including register, login, reset
-      password....
+      Routes for user authentication including register and login..
   - name: Users
     description: CRUD Functionality for users only available to admins
