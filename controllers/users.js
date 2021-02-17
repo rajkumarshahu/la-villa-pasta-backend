@@ -6,12 +6,13 @@ const User = require('../models/User');
 // @route     GET /users
 // @access    Private/Admin
 exports.getUsers = asyncHandler(async (req, res, next) => {
+
   res.status(200).json(res.advancedResults);
 });
 
 
 // @desc      Get single user
-// @route     GET /auth/users/:id
+// @route     GET /users/:id
 // @access    Private/Admin
 exports.getUser = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.params.id);
@@ -23,7 +24,7 @@ exports.getUser = asyncHandler(async (req, res, next) => {
 });
 
 // @desc      Create user
-// @route     POST /auth/users
+// @route     POST /users
 // @access    Private/Admin
 exports.createUser = asyncHandler(async (req, res, next) => {
   const user = await User.create(req.body);
@@ -35,7 +36,7 @@ exports.createUser = asyncHandler(async (req, res, next) => {
 });
 
 // @desc      Update user
-// @route     PUT /auth/users/:id
+// @route     PUT /users/:id
 // @access    Private/Admin
 exports.updateUser = asyncHandler(async (req, res, next) => {
   const user = await User.findByIdAndUpdate(req.params.id, req.body, {
@@ -50,7 +51,7 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
 });
 
 // @desc      Delete user
-// @route     DELETE /auth/users/:id
+// @route     DELETE /users/:id
 // @access    Private/Admin
 exports.deleteUser = asyncHandler(async (req, res, next) => {
   await User.findByIdAndDelete(req.params.id);

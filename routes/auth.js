@@ -1,10 +1,10 @@
 const express = require('express');
 const {
-	register,
-	login,
-	logout,
-	getMe,
-} = require('../controllers/auth');
+		register,
+		login,
+		logout,
+		getMe,
+	} = require('../controllers/auth');
 
 const router = express.Router();
 

@@ -27,8 +27,7 @@ router
     .route('/')
     .get(advancedResults(Item, ''), getItems)
     .post(
-       protect, authorize('admin'),
-        createItem)
+       protect, authorize('admin'), createItem)
 
 router
     .route('/:id')

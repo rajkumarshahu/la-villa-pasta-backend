@@ -18,12 +18,12 @@ const UserSchema = new mongoose.Schema({
 		],
 	},
 	address: {
-		streetNumber: {type: Number},
+		streetNumber: { type: Number },
 		streetName: { type: String },
 		apartmentNumber: { type: Number },
-		city: {type: String},
-		province: {type: String},
-		postalCode: {type: String}
+		city: { type: String },
+		province: { type: String },
+		postalCode: { type: String }
 	},
 	role: {
 		type: String,
