@@ -1,0 +1,543 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: La Villa Pasta REST API
+  description: Backend REST API for La Villa Pasta
+  contact: {}
+host: la-villa-pasta-backend.herokuapp.com
+basePath: /
+securityDefinitions: {}
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /items:
+    get:
+      description: Fetch all Items from database
+      summary: Get All Items
+      tags:
+        - Item
+      operationId: GetAllItems
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          required: false
+          default: 'Bearer {token}'
+          type: string
+      responses:
+        '200':
+          description: ''
+          headers: {}
+    post:
+      description: Add new Item to database
+      summary: Create New Item
+      tags:
+        - Item
+      operationId: CreateNewItem
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          required: false
+          default: 'Bearer {token}'
+          type: string
+        - name: Content-Type
+          in: header
+          required: true
+          type: string
+          description: JSON Type
+        - name: Body
+          in: body
+          required: true
+          description: ''
+          schema:
+            $ref: '#/definitions/CreateNewItemRequest'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /items/600cd1d7e3a5487228eb112c:
+    get:
+      description: Get single Item by id
+      summary: Get Single Item
+      tags:
+        - Item
+      operationId: GetSingleItem
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          required: false
+          default: 'Bearer {token}'
+          type: string
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /items/601f0124bef0d51b0f2f5529:
+    put:
+      description: Updates Item in database
+      summary: Update Item
+      tags:
+        - Item
+      operationId: UpdateItem
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          required: false
+          default: 'Bearer {token}'
+          type: string
+        - name: Content-Type
+          in: header
+          required: true
+          type: string
+          description: JSON Type
+        - name: Body
+          in: body
+          required: true
+          description: ''
+          schema:
+            $ref: '#/definitions/UpdateItemRequest'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+    delete:
+      description: Deletes pastas from database
+      summary: Delete Item
+      tags:
+        - Item
+      operationId: DeleteItem
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          required: false
+          default: 'Bearer {token}'
+          type: string
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /items/600cd1d7e3a5487228eb112c/photo:
+    put:
+      description: Route of upload a Item photo
+      summary: Upload Item Photo
+      tags:
+        - Item
+      operationId: UploadItemPhoto
+      deprecated: false
+      produces:
+        - application/json
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - name: Authorization
+          in: header
+          required: false
+          default: 'Bearer {token}'
+          type: string
+        - name: Content-Type
+          in: header
+          required: true
+          type: string
+          description: JSON Type
+        - name: file
+          in: formData
+          required: true
+          type: string
+          description: ''
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /auth/register:
+    post:
+      description: Add user to database with encrypted password
+      summary: Register User
+      tags:
+        - Authentication
+      operationId: RegisterUser
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          required: false
+          default: 'Bearer {token}'
+          type: string
+        - name: Content-Type
+          in: header
+          required: true
+          type: string
+          description: JSON Type
+        - name: Body
+          in: body
+          required: true
+          description: ''
+          schema:
+            $ref: '#/definitions/RegisterUserRequest'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /auth/login:
+    post:
+      summary: Login User
+      tags:
+        - Authentication
+      operationId: LoginUser
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          required: false
+          default: 'Bearer {token}'
+          type: string
+        - name: Content-Type
+          in: header
+          required: true
+          type: string
+          description: JSON Type
+        - name: Body
+          in: body
+          required: true
+          description: ''
+          schema:
+            $ref: '#/definitions/LoginUserRequest'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /auth/me:
+    get:
+      summary: Get Logged in User via Token
+      tags:
+        - Authentication
+      operationId: GetLoggedinUserviaToken
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          required: false
+          default: 'Bearer {token}'
+          type: string
+        - name: Content-Type
+          in: header
+          required: true
+          type: string
+          description: JSON Type
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /auth/logout:
+    get:
+      description: Clear token cookie
+      summary: Logout  User
+      tags:
+        - Authentication
+      operationId: LogoutUser
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          required: false
+          default: 'Bearer {token}'
+          type: string
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /users:
+    get:
+      description: Get All Users (admin)
+      summary: Get All Users (admin)
+      tags:
+        - Users
+      operationId: GetAllUsers(admin)
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          required: false
+          default: 'Bearer {token}'
+          type: string
+      responses:
+        '200':
+          description: ''
+          headers: {}
+    post:
+      description: Add user to database (admin)
+      summary: Create User (admin)
+      tags:
+        - Users
+      operationId: CreateUser(admin)
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          required: false
+          default: 'Bearer {token}'
+          type: string
+        - name: Content-Type
+          in: header
+          required: true
+          type: string
+          description: JSON Type
+        - name: Body
+          in: body
+          required: true
+          description: ''
+          schema:
+            $ref: '#/definitions/CreateUser%28admin%29Request'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /users/602c33597ae32821327bc3c0:
+    get:
+      description: Get single user by ID (admin)
+      summary: Get Single User (admin)
+      tags:
+        - Users
+      operationId: GetSingleUser(admin)
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          required: false
+          default: 'Bearer {token}'
+          type: string
+      responses:
+        '200':
+          description: ''
+          headers: {}
+    put:
+      description: Update user by ID (admin)
+      summary: Update User (admin)
+      tags:
+        - Users
+      operationId: UpdateUser(admin)
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          required: false
+          default: 'Bearer {token}'
+          type: string
+        - name: Body
+          in: body
+          required: true
+          description: ''
+          schema:
+            $ref: '#/definitions/UpdateUser%28admin%29Request'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+  /users/602c934a71554904c418f1d9:
+    delete:
+      description: Delete user from database (admin)
+      summary: Delete User (admin)
+      tags:
+        - Users
+      operationId: DeleteUser(admin)
+      deprecated: false
+      produces:
+        - application/json
+      parameters:
+        - name: Authorization
+          in: header
+          required: false
+          default: 'Bearer {token}'
+          type: string
+      responses:
+        '200':
+          description: ''
+          headers: {}
+definitions:
+  CreateNewItemRequest:
+    title: CreateNewItemRequest
+    example:
+      title: Cacio e Pepe Potato Gnocchi4444
+      description: ' We tossed our gnocchi in plenty of Parmesan and butter for a simple Cacio e Pepe vibe, but we also have a Tuscan Butter Gnocchi that we dream about regularly. '
+      unitPrice: 10.99
+      type: pasta
+    type: object
+    properties:
+      title:
+        type: string
+      description:
+        type: string
+      unitPrice:
+        type: number
+        format: double
+      type:
+        type: string
+    required:
+      - title
+      - description
+      - unitPrice
+      - type
+  UpdateItemRequest:
+    title: UpdateItemRequest
+    example:
+      title: Cacio e Pepe Potato Gnocchi
+    type: object
+    properties:
+      title:
+        type: string
+    required:
+      - title
+  RegisterUserRequest:
+    title: RegisterUserRequest
+    example:
+      name: Admin
+      email: admin@gmail.com
+      password: '123456'
+      address:
+        streetNumber: 240
+        streetName: Wellesley St E
+        apartmentNumber: 256
+        city: Toronto
+        province: 'ON'
+        postalCode: M4X 1R5
+    type: object
+    properties:
+      name:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      address:
+        $ref: '#/definitions/Address'
+    required:
+      - name
+      - email
+      - password
+      - address
+  Address:
+    title: Address
+    example:
+      streetNumber: 240
+      streetName: Wellesley St E
+      apartmentNumber: 256
+      city: Toronto
+      province: 'ON'
+      postalCode: M4X 1R5
+    type: object
+    properties:
+      streetNumber:
+        type: integer
+        format: int32
+      streetName:
+        type: string
+      apartmentNumber:
+        type: integer
+        format: int32
+      city:
+        type: string
+      province:
+        type: string
+      postalCode:
+        type: string
+    required:
+      - streetNumber
+      - streetName
+      - apartmentNumber
+      - city
+      - province
+      - postalCode
+  LoginUserRequest:
+    title: LoginUserRequest
+    example:
+      email: admin@gmail.com
+      password: '123456'
+    type: object
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+      - email
+      - password
+  CreateUser(admin)Request:
+    title: CreateUser(admin)Request
+    example:
+      name: Admin
+      email: admin@gmail.com
+      password: '123456'
+      address:
+        streetNumber: 240
+        streetName: Wellesley St E
+        apartmentNumber: 256
+        city: Toronto
+        province: 'ON'
+        postalCode: M4X 1R5
+    type: object
+    properties:
+      name:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      address:
+        $ref: '#/definitions/Address'
+    required:
+      - name
+      - email
+      - password
+      - address
+  UpdateUser(admin)Request:
+    title: UpdateUser(admin)Request
+    example:
+      name: Update Test
+    type: object
+    properties:
+      name:
+        type: string
+    required:
+      - name
+tags:
+  - name: Item
+    description: CRUD Functionality for Items
+  - name: Authentication
+    description: >-
+      Routes for user authentication including register, login, reset
+      password....
+  - name: Users
+    description: CRUD Functionality for users only available to admins
