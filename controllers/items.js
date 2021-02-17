@@ -127,7 +127,7 @@ exports.itemPhotoUpload = asyncHandler(async (req, res, next) => {
 			return next(new ErrorResponse(`Problem with file upload`, 500));
 		}
 
-		await Item.findByIdAndUpdate(req.params.id, { photo: file.name });
+		await Item.findByIdAndUpdate(req.params.id, { image: file.name });
 
 		res.status(200).json({
 			success: true,
