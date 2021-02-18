@@ -49,6 +49,7 @@ describe('Should check item end points', () => {
 				.request(server)
 				.get('/items')
 				.end((err, res) => {
+					console.log("******************",res.body.data.length)
 					res.should.have.status(200);
 					res.body.data.should.be.a('array');
 					res.body.should.be.a('object');
