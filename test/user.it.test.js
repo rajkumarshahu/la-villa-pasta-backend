@@ -121,7 +121,7 @@ describe('Should check user end points', () => {
 				.get(`/users/${userId2}`)
 				.set({ Authorization: `Bearer ${token}` })
 				.end((err, res) => {
-					console.log("***********", res.status)
+					//console.log("***********", res.status)
 					res.should.have.status(404);
 					res.body.error.should.be.eq(
 						`User not found with id of ${userId2}`
