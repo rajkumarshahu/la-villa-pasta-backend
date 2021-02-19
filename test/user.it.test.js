@@ -23,7 +23,8 @@ const authenticatedUser = request.agent(server);
 let userId = null;
 let token;
 let user = {
-	email: 'janesmith@gmail.com',
+	name: "Test",
+	email: 'testuser@gmail.com',
 	password: '123456'
 };
 
@@ -42,13 +43,12 @@ describe('Should check user end points', () => {
 	});
 
 	describe('GET /users', () => {
-		it('Should get all the users', (done) => {
+		it('Should get all the users by admin', (done) => {
 			chai
 				.request(server)
 				.get('/users')
 				.set({ Authorization: `Bearer ${token}` })
 				.end((err, res) => {
-					console.log("******************",res.body.data)
 					res.should.have.status(200);
 					res.body.data.should.be.a('array');
 					res.body.should.be.a('object');
@@ -56,139 +56,143 @@ describe('Should check user end points', () => {
 					done();
 				});
 		});
-	// 	it('Should not get all the items', (done) => {
-	// 		chai
-	// 			.request(server)
-	// 			.get('/item')
-	// 			.end((err, res) => {
-	// 				res.should.have.status(404);
-	// 				done();
-	// 			});
-	// 	});
-	// });
+		it('Should not get all the users', (done) => {
+			chai
+				.request(server)
+				.get('/user')
+				.set({ Authorization: `Bearer ${token}` })
+				.end((err, res) => {
+					res.should.have.status(404);
+					done();
+				});
+		});
+	});
 
-	// describe('POST /items', () => {
-	// 	it('Should create an item', (done) => {
-	// 		chai
-	// 			.request(server)
-	// 			.post('/items')
-	// 			.set({ Authorization: `Bearer ${token}` })
-	// 			.send(item)
-	// 			.end((err, res) => {
-	// 				itemId = res.body.data._id;
-	// 				res.should.have.status(201);
-	// 				res.body.data.title.should.be.eq(item.title);
-	// 				res.body.data.should.be.a('object');
-	// 				res.body.data.should.have.property('image');
-	// 				done();
-	// 			});
-	// 	});
+	describe('POST /users', () => {
+		it('Should create an item', (done) => {
+			chai
+				.request(server)
+				.post('/users')
+				.set({ Authorization: `Bearer ${token}` })
+				.send(user)
+				.end((err, res) => {
+					userId = res.body.data._id;
+					res.should.have.status(201);
+					res.body.data.name.should.be.eq(user.name);
+					res.body.data.should.be.a('object');
+					res.body.data.should.have.property('role');
+					done();
+				});
+		});
 
-	// 	it('Should not create an item without title', (done) => {
-	// 		delete item.title;
-	// 		chai
-	// 			.request(server)
-	// 			.post('/item')
-	// 			.set({ Authorization: `Bearer ${token}` })
-	// 			.send(item)
-	// 			.end((err, res) => {
-	// 				res.should.have.status(404);
-	// 				done();
-	// 			});
-	// 	});
-	// });
+		it('Should not create an user without name', (done) => {
+			delete user.name;
+			chai
+				.request(server)
+				.post('/users')
+				.set({ Authorization: `Bearer ${token}` })
+				.send(user)
+				.end((err, res) => {
+					res.should.have.status(400);
+					done();
+				});
+		});
+	});
 
-	// describe('GET /item/:id', () => {
-	// 	it('Should get single item', (done) => {
-	// 		chai
-	// 			.request(server)
-	// 			.get(`/items/${itemId}`)
-	// 			.end((err, res) => {
-	// 				res.should.have.status(200);
-	// 				res.body.should.be.a('object');
-	// 				res.body.data.should.be.a('object');
-	// 				res.body.data.should.have.property('image');
-	// 				res.body.success.should.be.eq(true);
-	// 				done();
-	// 			});
-	// 	});
-	// 	it('Should throw error when trying to get non existing item', (done) => {
-	// 		const itemId = '5d725a037b292f5f8ceff704';
-	// 		chai
-	// 			.request(server)
-	// 			.get(`/items/${itemId}`)
-	// 			.end((err, res) => {
-	// 				res.should.have.status(404);
-	// 				res.body.error.should.be.eq(
-	// 					`Item not found with id of ${itemId}`
-	// 				);
-	// 				done();
-	// 			});
-	// 	});
-	// });
+	describe('GET /users/:id', () => {
+		it('Should get single user', (done) => {
+			chai
+				.request(server)
+				.get(`/users/${userId}`)
+				.set({ Authorization: `Bearer ${token}` })
+				.end((err, res) => {
+					res.should.have.status(200);
+					res.body.should.be.a('object');
+					res.body.data.should.be.a('object');
+					res.body.data.should.have.property('role');
+					res.body.success.should.be.eq(true);
+					done();
+				});
+		});
+		it('Should throw error when trying to get non existing user', (done) => {
+			const userId2 = '602ca11b1a73ee0c87a25877';
+			chai
+				.request(server)
+				.get(`/users/${userId2}`)
+				.set({ Authorization: `Bearer ${token}` })
+				.end((err, res) => {
+					console.log("***********", res.status)
+					res.should.have.status(404);
+					res.body.error.should.be.eq(
+						`User not found with id of ${userId2}`
+					);
+					done();
+				});
+		});
+	});
 
-	// describe('PUT /items/:id', () => {
-	// 	it('Should update an item', (done) => {
-	// 		item = {
-	// 			...item,
-	// 			type: 'pasta',
-	// 			description: 'Test Description update'
-	// 		};
-	// 		chai
-	// 			.request(server)
-	// 			.put(`/items/${itemId}`)
-	// 			.set({ Authorization: `Bearer ${token}` })
-	// 			.send(item)
-	// 			.end((err, res) => {
-	// 				res.should.have.status(200);
-	// 				res.body.data.description.should.be.eq(item.description);
-	// 				res.body.data.type.should.be.eq(item.type);
-	// 				done();
-	// 			});
-	// 	});
+	describe('PUT /items/:id', () => {
+		xit('Should update an item', (done) => {
+			item = {
+				...item,
+				type: 'pasta',
+				description: 'Test Description update'
+			};
+			chai
+				.request(server)
+				.put(`/items/${itemId}`)
+				.set({ Authorization: `Bearer ${token}` })
+				.send(item)
+				.end((err, res) => {
+					res.should.have.status(200);
+					res.body.data.description.should.be.eq(item.description);
+					res.body.data.type.should.be.eq(item.type);
+					done();
+				});
+		});
 
-	// 	it('Should throw error if trying to update non existing item', (done) => {
-	// 		const itemId = '5d725a037b292f5f8ceff704';
-	// 		chai
-	// 			.request(server)
-	// 			.put(`/items/${itemId}`)
-	// 			.set({ Authorization: `Bearer ${token}` })
-	// 			.send(item)
-	// 			.end((err, res) => {
-	// 				res.should.have.status(404);
-	// 				res.body.error.should.be.eq(
-	// 					`Item not found with id of ${itemId}`
-	// 				);
-	// 				done();
-	// 			});
-	// 	});
-	// });
+		xit('Should throw error if trying to update non existing item', (done) => {
+			const itemId = '5d725a037b292f5f8ceff704';
+			chai
+				.request(server)
+				.put(`/items/${itemId}`)
+				.set({ Authorization: `Bearer ${token}` })
+				.send(item)
+				.end((err, res) => {
+					res.should.have.status(404);
+					res.body.error.should.be.eq(
+						`Item not found with id of ${itemId}`
+					);
+					done();
+				});
+		});
+	});
 
-	// describe('DELETE /items/:id', () => {
-	// 	it('Should delete an item', (done) => {
-	// 		chai
-	// 			.request(server)
-	// 			.delete(`/items/${itemId}`)
-	// 			.set({ Authorization: `Bearer ${token}` })
-	// 			.end((err, res) => {
-	// 				res.should.have.status(200);
-	// 				res.body.success.should.be.eq(true);
-	// 				done();
-	// 			});
-	// 	});
-	// 	it('Should throw error if trying to delete non existing item', (done) => {
-	// 		const itemId = '5d725a037b292f5f8ceff704';
-	// 		chai
-	// 			.request(server)
-	// 			.delete(`/items/${itemId}`)
-	// 			.set({ Authorization: `Bearer ${token}` })
-	// 			.end((err, res) => {
-	// 				res.should.have.status(404);
-	// 				res.body.error.should.be.eq(
-	// 					`Item not found with id of ${itemId}`
-	// 				);
-	// 				done();
-	// 			});
-	// 	});
+	describe('DELETE /users/:id', () => {
+		it('Should delete an item', (done) => {
+			chai
+				.request(server)
+				.delete(`/users/${userId}`)
+				.set({ Authorization: `Bearer ${token}` })
+				.end((err, res) => {
+					res.should.have.status(200);
+					res.body.success.should.be.eq(true);
+					done();
+				});
+		});
+		xit('Should throw error if trying to delete non existing item', (done) => {
+			const itemId = '5d725a037b292f5f8ceff704';
+			chai
+				.request(server)
+				.delete(`/items/${itemId}`)
+				.set({ Authorization: `Bearer ${token}` })
+				.end((err, res) => {
+					res.should.have.status(404);
+					res.body.error.should.be.eq(
+						`Item not found with id of ${itemId}`
+					);
+					done();
+				});
+		});
 	});
 });
