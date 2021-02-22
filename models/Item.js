@@ -17,7 +17,7 @@ const ItemSchema = new mongoose.Schema({
     },
     type: { // Salad, drink, dessert
         type: String,
-        enum: ['pasta', 'sauce', 'topping', 'salad', 'drink', 'dessert'],
+        enum: ['pasta', 'sauce', 'topping', 'salad', 'drink', 'dessert', 'combo'],
     },
     image: {
         type: String,

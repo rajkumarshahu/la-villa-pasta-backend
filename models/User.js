@@ -17,6 +17,11 @@ const UserSchema = new mongoose.Schema({
 			'Please add a valid email',
 		],
 	},
+	phone: {
+		type: String,
+		required: [true, 'Please add a name'],
+		maxlength: [10, 'Phone number can not be longer than 20 digits']
+	  },
 	address: {
 		streetNumber: { type: Number },
 		streetName: { type: String },
