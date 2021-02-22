@@ -19,8 +19,8 @@ const UserSchema = new mongoose.Schema({
 	},
 	phone: {
 		type: String,
-		required: [true, 'Please add a name'],
-		maxlength: [10, 'Phone number can not be longer than 20 digits']
+		required: [true, 'Please add a phone number'],
+		maxlength: [10, 'Phone number can not be longer than 10 digits']
 	  },
 	address: {
 		streetNumber: { type: Number },
