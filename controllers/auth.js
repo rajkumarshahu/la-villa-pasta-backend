@@ -9,7 +9,7 @@ const User = require('../models/User');
 // @access  Public
 exports.register = asyncHandler(async (req, res, next) => {
 	// Sending data on the body
-	const { name, email, address, password, role, cashBackAmount } = req.body;
+	const { name, email, address, password, phone, role, cashBackAmount } = req.body;
 
 	// Create user
 	const user = await User.create({
@@ -17,6 +17,7 @@ exports.register = asyncHandler(async (req, res, next) => {
 		email,
 		address,
 		password,
+		phone,
 		role,
 		cashBackAmount
 	});
