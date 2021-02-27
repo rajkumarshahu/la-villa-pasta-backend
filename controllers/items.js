@@ -2,13 +2,13 @@ const Item = require('../models/Item');
 const path = require('path');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
+const Order = require('../models/Order');
 
 //@desc        Get all item
 //@route       GET /items
 //@access      Public
 exports.getItems = asyncHandler(async (req, res, next) => {
 	const items = await Item.find();
-	//.populate('records')
 	res
 		.status(200)
 		.json(res.advancedResults);
@@ -52,6 +52,8 @@ exports.updateItem = asyncHandler(async (req, res, next) => {
 		new: true,
 		runValidators: true,
 	});
+
+
 	if (!item) {
 		return next(
 			new ErrorResponse(`Item not found with id of ${req.params.id}`, 404)

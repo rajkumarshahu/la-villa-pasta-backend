@@ -27,12 +27,52 @@ const ItemSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    order: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Order',
+        required: true
+    },
     user: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
       required: true
     }
+},
+{
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
 }
+
 );
+
+// Static method to get total
+// ItemSchema.statics.getTotal = async function() {
+//     try {
+//         await this.model('Order').findOneAndUpdate(total, {
+//             $set:{total: this.quantity * this.unitPrice}
+//         }, {new: true},);
+//       } catch (err) {
+//         console.error(err);
+//       }
+
+// }
+
+// Call getTotal after save
+// ItemSchema.post('save', function() {
+//     this.constructor.getTotal()
+// })
+
+// Call getTotal before save
+// ItemSchema.pre('remove', function() {
+//     this.constructor.getTotal()
+// })
+
+// Reverse populate with virtuals
+ItemSchema.virtual('orders', {
+    ref: 'Order',
+    localField: '_id',
+    foreignField: 'item',
+    justOne: false
+  });
 
 module.exports = mongoose.model('Item', ItemSchema);

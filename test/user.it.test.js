@@ -2,6 +2,7 @@ let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../server');
 var request = require('supertest');
+const { use } = require('../routes/auth');
 
 // Assertion type
 chai.should();
@@ -69,7 +70,7 @@ describe('Should check user end points', () => {
 	});
 
 	describe('POST /users', () => {
-		it('Should create an item', (done) => {
+		it('Should create an user', (done) => {
 			chai
 				.request(server)
 				.post('/users')
@@ -131,37 +132,37 @@ describe('Should check user end points', () => {
 		});
 	});
 
-	describe('PUT /items/:id', () => {
-		xit('Should update an item', (done) => {
-			item = {
-				...item,
-				type: 'pasta',
-				description: 'Test Description update'
+	describe('PUT /users/:id', () => {
+		it('Should update an user', (done) => {
+			user = {
+				name: 'Test User',
+			    email: 'test@user.com',
+			    role: 'customer'
 			};
 			chai
 				.request(server)
-				.put(`/items/${itemId}`)
+				.put(`/users/${userId}`)
 				.set({ Authorization: `Bearer ${token}` })
-				.send(item)
+				.send(user)
 				.end((err, res) => {
 					res.should.have.status(200);
-					res.body.data.description.should.be.eq(item.description);
-					res.body.data.type.should.be.eq(item.type);
+					res.body.data.name.should.be.eq(user.name);
+					res.body.data.email.should.be.eq(user.email);
 					done();
 				});
 		});
 
-		xit('Should throw error if trying to update non existing item', (done) => {
-			const itemId = '5d725a037b292f5f8ceff704';
+		it('Should throw error if trying to update non existing user', (done) => {
+			const userId = '5d725a037b292f5f8ceff704';
 			chai
 				.request(server)
-				.put(`/items/${itemId}`)
+				.put(`/users/${userId}`)
 				.set({ Authorization: `Bearer ${token}` })
-				.send(item)
+				.send(user)
 				.end((err, res) => {
 					res.should.have.status(404);
 					res.body.error.should.be.eq(
-						`Item not found with id of ${itemId}`
+						`User not found with id of ${userId}`
 					);
 					done();
 				});
@@ -169,7 +170,7 @@ describe('Should check user end points', () => {
 	});
 
 	describe('DELETE /users/:id', () => {
-		it('Should delete an item', (done) => {
+		it('Should delete an user', (done) => {
 			chai
 				.request(server)
 				.delete(`/users/${userId}`)
@@ -180,19 +181,93 @@ describe('Should check user end points', () => {
 					done();
 				});
 		});
-		xit('Should throw error if trying to delete non existing item', (done) => {
-			const itemId = '5d725a037b292f5f8ceff704';
+		it('Should throw error if trying to delete non existing user', (done) => {
+			const userId = '5d725a037b292f5f8ceff704';
 			chai
 				.request(server)
-				.delete(`/items/${itemId}`)
+				.delete(`/users/${userId}`)
 				.set({ Authorization: `Bearer ${token}` })
 				.end((err, res) => {
 					res.should.have.status(404);
 					res.body.error.should.be.eq(
-						`Item not found with id of ${itemId}`
+						`User not found with id of ${userId}`
 					);
 					done();
 				});
 		});
 	});
+
+
 });
+
+describe('Should check customer user end points', () => {
+	before(function (done) {
+		authenticatedUser
+			.post('/auth/login')
+			.set('Accept', 'application/json')
+			.set('Content-Type', 'application/json')
+			.send(userCredentials.customerUser)
+			.end(function (err, res) {
+				if (err) throw err;
+				token = res.body.token;
+				done();
+			});
+	});
+
+	describe('GET /users', () => {
+		it('Should not get all the users by customer', (done) => {
+			chai
+				.request(server)
+				.get('/users')
+				.set({ Authorization: `Bearer ${token}` })
+				.end((err, res) => {
+					console.log("***********", res.status)
+					res.should.have.status(403);
+					done();
+				});
+		});
+	});
+
+	describe('POST /users', () => {
+		it('Should  not create a user', (done) => {
+			chai
+				.request(server)
+				.post('/users')
+				.set({ Authorization: `Bearer ${token}` })
+				.send(user)
+				.end((err, res) => {
+					console.log("***********", res.status)
+					res.should.have.status(403);
+					done();
+				});
+		});
+		});
+
+		describe('PUT /users/:id', () => {
+			it('Should not update an user by customer', (done) => {
+				chai
+					.request(server)
+					.put(`/users/${userId}`)
+					.set({ Authorization: `Bearer ${token}` })
+					.send(user)
+					.end((err, res) => {
+				    console.log("***********", res.status)
+					res.should.have.status(403);
+						done();
+					});
+			});
+		});
+		describe('PUT /users/:id', () => {
+			it('Should not delete an user by customer', (done) => {
+				chai
+				.request(server)
+				.delete(`/users/${userId}`)
+				.set({ Authorization: `Bearer ${token}` })
+				.end((err, res) => {
+					console.log("***********", res.status)
+					res.should.have.status(403);
+					done();
+				});
+					});
+			});
+		});

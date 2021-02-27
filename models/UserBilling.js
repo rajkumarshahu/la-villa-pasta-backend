@@ -1,8 +1,15 @@
 const mongoose = require('mongoose');
 
 const UserBillingSchema = new mongoose.Schema({
-    userId: {
-        type: String,
+    user: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
+      required: true
+    },
+    order: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Order',
+        required: true
     },
     address: {
         type: String,

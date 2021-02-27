@@ -3,22 +3,27 @@ const {
 	getOrders,
 	getOrder,
 	createOrder,
+    updateOrder,
+    deleteOrder
 } = require('../controllers/orders');
 
 
+const Order = require('../models/Order');
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
+
+const advancedResults = require('../middleware/advancedResults');
 
 // Protect and authorize middlewares
 const { protect, authorize } = require('../middleware/auth');
 
-// Re-route into other resource routers
-//router.use('/:patientId/records', recordRouter);
-
 
 router
     .route('/')
-    .get(getOrders)
+    .get(
+        advancedResults(Order, 'item'),
+        getOrders
+        )
     .post(
        protect, authorize('admin', 'customer'),
         createOrder)
@@ -26,7 +31,7 @@ router
 router
     .route('/:id')
     .get(getOrder)
-    // .put(protect, authorize('admin'), updateItem)
-    // .delete(protect, authorize('admin'), deleteItem);
+    // .put(protect, authorize('admin'), updateOrder)
+    // .delete(protect, authorize('admin'), deleteOrder);
 
 module.exports = router;

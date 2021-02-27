@@ -11,6 +11,9 @@ const {
 
 const Item = require('../models/Item')
 
+// Include other resource routers
+const orderRouter = require('./orders');
+
 const router = express.Router();
 
 const advancedResults = require('../middleware/advancedResults');
@@ -19,13 +22,13 @@ const advancedResults = require('../middleware/advancedResults');
 const { protect, authorize } = require('../middleware/auth');
 
 // Re-route into other resource routers
-//router.use('/:patientId/records', recordRouter);
+router.use('/:itemId/orders', orderRouter);
 
 router.route('/:id/photo').put(protect, authorize('admin'), itemPhotoUpload);
 
 router
     .route('/')
-    .get(advancedResults(Item, ''), getItems)
+    .get(advancedResults(Item, 'orders'), getItems)
     .post(
        protect, authorize('admin'), createItem)
 
