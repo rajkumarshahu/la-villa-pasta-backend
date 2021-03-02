@@ -7,7 +7,7 @@ const OrderSchema = new mongoose.Schema({
     quantity:  {
       type: Number,
       trim: true,
-      default: 0
+      default: 1
   },
     isPaidUsingCashBack: {
         type: Boolean,
@@ -25,6 +25,7 @@ const OrderSchema = new mongoose.Schema({
     orderType: {
         type: String,
 		enum: ['pickup', 'delivery'],
+    default: 'pickup'
     },
     createdAt: {
       type: Date,

@@ -77,9 +77,31 @@ exports.createOrder = asyncHandler(async (req, res, next) => {
 });
 
 //@desc        Update order
-//@route       PUT /orders/:id
+//@route       PUT /items/:itemId/orders/:orderId
 //@access      Private
 exports.updateOrder = asyncHandler(async (req, res, next) => {
+	req.body.item = req.params.itemId;
+
+	const item = await Item.findById(req.params.itemId);
+
+	if (!item) {
+		return next(
+		  new ErrorResponse(`No item with the id of ${req.params.itemId}`),
+		  404
+		);
+	  }
+
+	const order = await Order.findByIdAndUpdate(req.params.id, req.body, {
+		new: true,
+		runValidators: true,
+	});
+
+	if (!order) {
+		return next(
+			new ErrorResponse(`Order not found with id of ${req.params.id}`, 404)
+		);
+	}
+	res.status(200).json({ success: true, data: order });
 
 });
 
@@ -87,5 +109,14 @@ exports.updateOrder = asyncHandler(async (req, res, next) => {
 //@route       DELETE /orders/:id
 //@access      Private
 exports.deleteOrder = asyncHandler(async (req, res, next) => {
+
+	const order = await Order.findById(req.params.id);
+	if (!order) {
+		return next(
+			new ErrorResponse(`Item not found with id of ${req.params.id}`, 404)
+		);
+	}
+	order.remove();
+	res.status(200).json({ success: true, data: {} });
 
 });

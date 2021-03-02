@@ -31,7 +31,7 @@ router
 router
     .route('/:id')
     .get(getOrder)
-    // .put(protect, authorize('admin'), updateOrder)
-    // .delete(protect, authorize('admin'), deleteOrder);
+    .put(protect, authorize('admin'), updateOrder)
+    .delete(protect, authorize('admin'), deleteOrder);
 
 module.exports = router;
