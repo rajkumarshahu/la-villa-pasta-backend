@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const UserBillingSchema = new mongoose.Schema({
+const BillingSchema = new mongoose.Schema({
     user: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
@@ -12,13 +12,17 @@ const UserBillingSchema = new mongoose.Schema({
         required: true
     },
     address: {
-        type: String,
-        trim: true,
-    },
+		streetNumber: { type: Number },
+		streetName: { type: String },
+		apartmentNumber: { type: Number },
+		city: { type: String },
+		province: { type: String },
+		postalCode: { type: String }
+	},
     createdAt: {
         type: Date,
         default: Date.now
     }
 });
 
-module.exports = mongoose.model('UserBilling', UserBillingSchema);
+module.exports = mongoose.model('Billing', BillingSchema);

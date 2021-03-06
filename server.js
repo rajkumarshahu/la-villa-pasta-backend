@@ -15,8 +15,10 @@ dotenv.config({ path: './config/config.env' });
 connectDB();
 
 // Route files
+const billings = require('./routes/billings');
 const items = require('./routes/items');
 const orders = require('./routes/orders');
+
 const auth = require('./routes/auth');
 const users = require('./routes/users');
 
@@ -65,8 +67,11 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Mount routers
+
 app.use('/items', items);
+app.use('/billings', billings);
 app.use('/orders', orders);
+
 app.use('/auth', auth);
 app.use('/users', users);
 
