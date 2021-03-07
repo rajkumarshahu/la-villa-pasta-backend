@@ -49,7 +49,7 @@ describe('Should check item end points', () => {
 				.request(server)
 				.get('/items')
 				.end((err, res) => {
-					//console.log("******************",res.body.data.length)
+					console.log("******************",res.body.data.length)
 					res.should.have.status(200);
 					res.body.data.should.be.a('array');
 					res.body.should.be.a('object');
@@ -70,9 +70,10 @@ describe('Should check item end points', () => {
 
 	describe('POST /items', () => {
 		it('Should create an item', (done) => {
+			const orderId = '603923ad2e44732db5cd0a7e'
 			chai
 				.request(server)
-				.post('/items')
+				.post(`/orders/${orderId}/items`)
 				.set({ Authorization: `Bearer ${token}` })
 				.send(item)
 				.end((err, res) => {

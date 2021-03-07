@@ -16,7 +16,6 @@ const advancedResults = require('../middleware/advancedResults');
 
 // Protect and authorize middlewares
 const { protect, authorize } = require('../middleware/auth');
-const { getUsers } = require('../controllers/users');
 
 
 router

@@ -19,8 +19,8 @@ exports.getItems = asyncHandler(async (req, res, next) => {
 //@access      Public
 exports.getItem = asyncHandler(async (req, res, next) => {
 
-	const item = await Item.findById(req.params.id)
-	//.populate('pastas');
+	const item = await Item.findById(req.params.id);
+
 	if (!item) {
 		return next(
 			new ErrorResponse(`Item not found with id of ${req.params.id}`, 404)
@@ -30,12 +30,25 @@ exports.getItem = asyncHandler(async (req, res, next) => {
 });
 
 //@desc        Add new item
-//@route       POST /items
+//@route       POST /orders/:orderId/items
 //@access      Private
 exports.createItem = asyncHandler(async (req, res, next) => {
 
+	req.body.order = req.params.orderId;
 	// Add user to req,body
 	req.body.user = req.user.id;
+
+  const order = await Order.findById(req.params.orderId);
+
+  if (!order) {
+    return next(
+      new ErrorResponse(`No order with the id of ${req.params.orderId}`),
+      404
+    );
+  }
+
+	// Add user to req,body
+	//req.body.user = req.user.id;
 
 	const item = await Item.create(req.body);
 	res.status(201).json({
