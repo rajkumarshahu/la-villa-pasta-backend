@@ -70,10 +70,10 @@ describe('Should check item end points', () => {
 
 	describe('POST /items', () => {
 		it('Should create an item', (done) => {
-			const orderId = '603923ad2e44732db5cd0a7e'
+			//const orderId = '603923ad2e44732db5cd0a7e'
 			chai
 				.request(server)
-				.post(`/orders/${orderId}/items`)
+				.post(`/items`)
 				.set({ Authorization: `Bearer ${token}` })
 				.send(item)
 				.end((err, res) => {
