@@ -34,18 +34,18 @@ exports.getItem = asyncHandler(async (req, res, next) => {
 //@access      Private
 exports.createItem = asyncHandler(async (req, res, next) => {
 
-	req.body.order = req.params.orderId;
+	//req.body.order = req.params.orderId;
 	// Add user to req,body
 	req.body.user = req.user.id;
 
-  const order = await Order.findById(req.params.orderId);
+//   const order = await Order.findById(req.params.orderId);
 
-  if (!order) {
-    return next(
-      new ErrorResponse(`No order with the id of ${req.params.orderId}`),
-      404
-    );
-  }
+//   if (!order) {
+//     return next(
+//       new ErrorResponse(`No order with the id of ${req.params.orderId}`),
+//       404
+//     );
+//   }
 
 	// Add user to req,body
 	//req.body.user = req.user.id;

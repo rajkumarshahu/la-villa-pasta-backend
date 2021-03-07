@@ -26,11 +26,12 @@ const ItemSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
-    },
+    }
+    ,
     order: {
         type: mongoose.Schema.ObjectId,
         ref: 'Order',
-        required: true
+        required: false
     },
     user: {
       type: mongoose.Schema.ObjectId,
