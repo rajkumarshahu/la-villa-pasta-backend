@@ -9,20 +9,15 @@ const {
 } = require('../controllers/items');
 
 
-const Item = require('../models/Item')
+const Item = require('../models/Item');
 
-// Include other resource routers
-const orderRouter = require('./orders');
-
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 const advancedResults = require('../middleware/advancedResults');
 
 // Protect and authorize middlewares
 const { protect, authorize } = require('../middleware/auth');
 
-// Re-route into other resource routers
-router.use('/:itemId/orders', orderRouter);
 
 router.route('/:id/photo').put(protect, authorize('admin'), itemPhotoUpload);
 

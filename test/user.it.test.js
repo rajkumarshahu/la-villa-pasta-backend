@@ -26,7 +26,8 @@ let token;
 let user = {
 	name: "Test",
 	email: 'testuser@gmail.com',
-	password: '123456'
+	password: '123456',
+	phone: '5555555555'
 };
 
 describe('Should check user end points', () => {
@@ -122,7 +123,6 @@ describe('Should check user end points', () => {
 				.get(`/users/${userId2}`)
 				.set({ Authorization: `Bearer ${token}` })
 				.end((err, res) => {
-					//console.log("***********", res.status)
 					res.should.have.status(404);
 					res.body.error.should.be.eq(
 						`User not found with id of ${userId2}`
@@ -221,23 +221,21 @@ describe('Should check customer user end points', () => {
 				.get('/users')
 				.set({ Authorization: `Bearer ${token}` })
 				.end((err, res) => {
-					console.log("***********", res.status)
-					res.should.have.status(403);
+					res.should.have.status(401);
 					done();
 				});
 		});
 	});
 
 	describe('POST /users', () => {
-		it('Should  not create a user', (done) => {
+		it('Should  not create a user by customer', (done) => {
 			chai
 				.request(server)
 				.post('/users')
 				.set({ Authorization: `Bearer ${token}` })
 				.send(user)
 				.end((err, res) => {
-					console.log("***********", res.status)
-					res.should.have.status(403);
+					res.should.have.status(401);
 					done();
 				});
 		});
@@ -251,8 +249,7 @@ describe('Should check customer user end points', () => {
 					.set({ Authorization: `Bearer ${token}` })
 					.send(user)
 					.end((err, res) => {
-				    console.log("***********", res.status)
-					res.should.have.status(403);
+					res.should.have.status(401);
 						done();
 					});
 			});
@@ -264,8 +261,7 @@ describe('Should check customer user end points', () => {
 				.delete(`/users/${userId}`)
 				.set({ Authorization: `Bearer ${token}` })
 				.end((err, res) => {
-					console.log("***********", res.status)
-					res.should.have.status(403);
+					res.should.have.status(401);
 					done();
 				});
 					});
