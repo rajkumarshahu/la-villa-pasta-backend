@@ -113,7 +113,7 @@ exports.deleteOrder = asyncHandler(async (req, res, next) => {
 	const order = await Order.findById(req.params.id);
 	if (!order) {
 		return next(
-			new ErrorResponse(`Item not found with id of ${req.params.id}`, 404)
+			new ErrorResponse(`Order not found with id of ${req.params.id}`, 404)
 		);
 	}
 	order.remove();
