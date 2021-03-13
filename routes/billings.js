@@ -24,8 +24,9 @@ router.route('/radius/:zipcode/:distance').get(getUsersInRadius);
 router
     .route('/')
     .get(
-        advancedResults(Billing, 'order'),
-        getBillings
+        advancedResults(
+            Billing, 'order'),
+            getBillings
         )
     .post(
        protect, authorize('admin'), createBilling)

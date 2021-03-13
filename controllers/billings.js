@@ -53,12 +53,7 @@ exports.createBilling = asyncHandler(async (req, res, next) => {
 	// Add user to req,body
 	req.body.user = req.user.id;
 
-	console.log(req.params.orderId)
-
-
   const order = await Order.findById(req.params.orderId);
-
-  //console.log(order)
 
   if (!order) {
     return next(

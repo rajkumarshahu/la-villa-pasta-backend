@@ -19,25 +19,21 @@ const userCredentials = {
 	},
 };
 const authenticatedUser = request.agent(server);
-
-let itemId = null;
-
-let item = {
-	title: 'Test item',
-	description: "Test description",
-	unitPrice: 10.99,
-	type: 'pasta'
-};
+let token;
 
 let orderId = null;
-let token;
 let order= {
 	total : 20,
     quantity : 1,
     orderType : "pickup"
 };
 
-describe('Should check order end points', () => {
+let billingId = null;
+let billing = {
+    address : "240 Bloor St East, Toronto"
+};
+
+describe('Should check billing end points', () => {
 	before(function (done) {
 		authenticatedUser
 			.post('/auth/login')
@@ -51,11 +47,11 @@ describe('Should check order end points', () => {
 			});
 	});
 
-    	describe('GET /orders', () => {
-		it('Should get all the orders', (done) => {
+	describe('GET /orders/:orderId/billings', () => {
+		it('Should get all the billings', (done) => {
 			chai
 				.request(server)
-				.get('/orders')
+				.get('/orders/603925fddfcbb32f928e6c8f/billings')
 				.end((err, res) => {
 					res.should.have.status(200);
 					res.body.data.should.be.a('array');
@@ -64,43 +60,60 @@ describe('Should check order end points', () => {
 					done();
 				});
 		});
-
-
-		it('Should not get all the orders', (done) => {
+		it('Should not get all the billings', (done) => {
 			chai
 				.request(server)
-				.get('/order')
+				.get('/billings')
 				.end((err, res) => {
-					res.should.have.status(404);
+					res.should.have.status(200);
 					done();
 				});
 		});
 	});
 
-	describe('POST /items/:itemId/orders', () => {
-		it('Should create an order', (done) => {
-
-			chai
+	describe('POST /orders/:orderId/billings', () => {
+        before(function (done) {
+            chai
 				.request(server)
 				.post(`/items/6044fe337acbc1370a5b649d/orders`)
 				.set({ Authorization: `Bearer ${token}` })
 				.send(order)
 				.end((err, res) => {
 					orderId = res.body.data._id;
-					orederId = res.body.data._id;
+					done();
+				});
+        });
+
+        after(function (done) {
+            chai
+				.request(server)
+				.delete(`/orders/${orderId}`)
+				.set({ Authorization: `Bearer ${token}` })
+				.end((err, res) => {
+					done();
+				});
+        });
+		it('Should create an billing', (done) => {
+			chai
+				.request(server)
+				.post(`/orders/${orderId}/billings`)
+				.set({ Authorization: `Bearer ${token}` })
+				.send(billing)
+				.end((err, res) => {
+					billingId = res.body.data._id;
 					res.should.have.status(200);
 					res.body.data.should.be.a('object');
 					done();
 				});
 		});
 
-		xit('Should not create an order without total', (done) => {
-			delete order.total;
+		it('Should not create an billing without address', (done) => {
+			delete billing.address;
 			chai
 				.request(server)
-				.post('/order')
+				.post('/billing')
 				.set({ Authorization: `Bearer ${token}` })
-				.send(order)
+				.send(billing)
 				.end((err, res) => {
 					res.should.have.status(404);
 					done();
@@ -108,77 +121,79 @@ describe('Should check order end points', () => {
 		});
 	});
 
-	describe('GET /orders/:id', () => {
-		it('Should get single order', (done) => {
+	describe('GET /billings/:id', () => {
+		it('Should get single billing', (done) => {
 			chai
 				.request(server)
-				.get(`/orders/604d419bd2bbd568629182cd`)
+				.get(`/billings/${billingId}`)
 				.end((err, res) => {
 					res.should.have.status(200);
 					res.body.should.be.a('object');
 					res.body.data.should.be.a('object');
+
 					res.body.success.should.be.eq(true);
 					done();
 				});
 		});
-		it('Should throw error when trying to get non existing order', (done) => {
-			const orderId2 = '603925fddfcbb32f928e6c8f';
+
+        it('Should throw error when trying to get non existing billing', (done) => {
+			let billingId3 = '604d48eeb0473e72f2cb7373';
+
 			chai
 				.request(server)
-				.get(`/orders/${orderId2}`)
+				.get(`/billings/${billingId3}`)
 				.end((err, res) => {
 					res.should.have.status(500);
 					res.body.error.should.be.eq(
-						`No order with the id of ${orderId2}`
+						`No billing with the id of ${billingId3}`
 					);
 					done();
 				});
 		});
+
 	});
 
-	describe('PUT /items/:itemId/orders/:orderId', () => {
-		it('Should update an order', (done) => {
-			order = {
-				...order,
-				total : 40,
-                quantity : 2,
-                orderType : "pickup"
+	describe(' PUT /billings/:id', () => {
+		it('Should update a billing', (done) => {
+			billing = {
+				...billing,
+               address : "123 king st., Toronto"
 			};
 			chai
 				.request(server)
-				.put(`/items/6044fe337acbc1370a5b649d/orders/${orderId}`)
+				.put(`/billings/${billingId}`)
 				.set({ Authorization: `Bearer ${token}` })
-				.send(order)
+				.send(billing)
 				.end((err, res) => {
 					res.should.have.status(200);
-					res.body.data.quantity.should.be.eq(order.quantity);
-					res.body.data.total.should.be.eq(order.total);
+					res.body.data.address.should.be.eq(billing.address);
+					// res.body.data.type.should.be.eq(billing.type);
 					done();
 				});
 		});
 
-		it('Should throw error if trying to update non existing order', (done) => {
-			const orderId = '603925fddfcbb32f928e6c8f';
+		it('Should throw error if trying to update non existing billing', (done) => {
+			const billingId = '5d725a037b292f5f8ceff703';
 			chai
 				.request(server)
-				.put(`/items/6044fe337acbc1370a5b649d/orders/${orderId}`)
+				.put(`/billings/${billingId}`)
 				.set({ Authorization: `Bearer ${token}` })
-				.send(order)
+				.send(billing)
 				.end((err, res) => {
 					res.should.have.status(404);
 					res.body.error.should.be.eq(
-						`Order not found with id of ${orderId}`
+						`Billing not found with id of ${billingId}`
 					);
 					done();
 				});
 		});
 	});
 
-	describe('DELETE /orders/:id', () => {
-		it('Should delete an order', (done) => {
+	describe('DELETE /billings/:id', () => {
+		it('Should delete a billing', (done) => {
 			chai
 				.request(server)
-				.delete(`/orders/${orderId}`)
+				.delete(`/billings/${billingId}`)
 				.set({ Authorization: `Bearer ${token}` })
 				.end((err, res) => {
 					res.should.have.status(200);
@@ -186,19 +201,21 @@ describe('Should check order end points', () => {
 					done();
 				});
 		});
-		it('Should throw error if trying to delete non existing order', (done) => {
-			const orderId = '603925fddfcbb32f928e6c8f';
+		it('Should throw error if trying to delete non existing billing', (done) => {
+			const billingId2 = '5d725a037b292f5f8ceff704';
 			chai
 				.request(server)
-				.delete(`/orders/${orderId}`)
+				.delete(`/billings/${billingId2}`)
 				.set({ Authorization: `Bearer ${token}` })
 				.end((err, res) => {
 					res.should.have.status(404);
 					res.body.error.should.be.eq(
-						`Order not found with id of ${orderId}`
+						`Billing not found with id of ${billingId2}`
 					);
 					done();
 				});
 		});
+
+
 	});
 });
