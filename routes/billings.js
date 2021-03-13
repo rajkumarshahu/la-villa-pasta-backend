@@ -4,7 +4,8 @@ const {
 	getBilling,
 	createBilling,
     updateBilling,
-    deleteBilling
+    deleteBilling,
+    getUsersInRadius
 } = require('../controllers/billings');
 
 
@@ -16,6 +17,8 @@ const advancedResults = require('../middleware/advancedResults');
 
 // Protect and authorize middlewares
 const { protect, authorize } = require('../middleware/auth');
+
+router.route('/radius/:zipcode/:distance').get(getUsersInRadius);
 
 
 router
