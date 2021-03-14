@@ -26,6 +26,6 @@ router
   .route('/:id')
   .get(getUser)
   .put(protect, authorize('admin', 'customer'), updateUser)
-  .delete(deleteUser);
+  .delete(protect, authorize('admin'), deleteUser);
 
 module.exports = router;
