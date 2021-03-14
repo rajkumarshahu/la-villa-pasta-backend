@@ -112,7 +112,7 @@ describe('Should check order end points', () => {
 		it('Should get single order', (done) => {
 			chai
 				.request(server)
-				.get(`/orders/604d419bd2bbd568629182cd`)
+				.get(`/orders/${orderId}`)
 				.end((err, res) => {
 					res.should.have.status(200);
 					res.body.should.be.a('object');
