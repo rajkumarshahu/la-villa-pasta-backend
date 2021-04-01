@@ -70,7 +70,7 @@ exports.createBilling = asyncHandler(async (req, res, next) => {
   });
 });
 
-//@desc        Update order
+//@desc        Update billings
 //@route       PUT /billings/:billingId
 //@access      Private
 exports.updateBilling = asyncHandler(async (req, res, next) => {

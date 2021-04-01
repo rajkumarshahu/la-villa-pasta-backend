@@ -4,6 +4,8 @@ const dotenv = require('dotenv');
 const colors = require('colors');
 const fileupload = require('express-fileupload');
 const cookieParser = require('cookie-parser');
+const mongoSanitize = require('express-mongo-sanitize');
+const helmet = require("helmet");
 const connectDB = require('./config/db');
 const errorHandler = require('./middleware/error');
 const cors = require('cors');
@@ -59,6 +61,12 @@ app.use(logger);
 
 // File uploading
 app.use(fileupload());
+
+// Sanitize
+app.use(mongoSanitize());
+
+// Set security headers
+app.use(helmet());
 
 // Enable CORS
 app.use(cors());
