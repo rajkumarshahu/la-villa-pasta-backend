@@ -817,28 +817,17 @@ definitions:
   LoginUserRequest:
     title: LoginUserRequest
     example:
-      email:
-        $gt: ''
+      email: admin@gmail.com
       password: '123456'
     type: object
     properties:
       email:
-        $ref: '#/definitions/Email'
+        type: string
       password:
         type: string
     required:
-    - email
-    - password
-  Email:
-    title: Email
-    example:
-      $gt: ''
-    type: object
-    properties:
-      $gt:
-        type: string
-    required:
-    - $gt
+      - email
+      - password
   CreateUser(admin)Request:
     title: CreateUser(admin)Request
     example:

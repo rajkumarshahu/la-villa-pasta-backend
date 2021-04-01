@@ -1,1284 +1,1267 @@
 {
-  "swagger": "2.0",
-  "info": {
-     "version": "1.0",
-     "title": "La Villa Pasta REST API",
-     "description": "Backend REST API for La Villa Pasta to manage items, orders and users",
-     "contact": {}
-  },
-  "host": "la-villa-pasta-backend.herokuapp.com",
-  "basePath": "/",
-  "securityDefinitions": {},
-  "schemes": [
-     "https"
-  ],
-  "consumes": [
-     "application/json"
-  ],
-  "produces": [
-     "application/json"
-  ],
-  "paths": {
-     "/items": {
-        "get": {
-           "description": "Fetch all Items from database",
-           "summary": "Get All Items",
-           "tags": [
-              "Item"
-           ],
-           "operationId": "GetAllItems",
-           "deprecated": false,
-           "produces": [
-              "application/json"
-           ],
-           "parameters": [
-              {
-                 "name": "Authorization",
-                 "in": "header",
-                 "required": false,
-                 "default": "Bearer {token}",
-                 "type": "string"
-              }
-           ],
-           "responses": {
-              "200": {
-                 "description": "",
-                 "headers": {}
-              }
-           }
-        },
-        "post": {
-           "description": "Add new Item to database",
-           "summary": "Create New Item",
-           "tags": [
-              "Item"
-           ],
-           "operationId": "CreateNewItem",
-           "deprecated": false,
-           "produces": [
-              "application/json"
-           ],
-           "consumes": [
-              "application/json"
-           ],
-           "parameters": [
-              {
-                 "name": "Authorization",
-                 "in": "header",
-                 "required": false,
-                 "default": "Bearer {token}",
-                 "type": "string"
-              },
-              {
-                 "name": "Content-Type",
-                 "in": "header",
-                 "required": true,
-                 "type": "string",
-                 "description": "JSON Type"
-              },
-              {
-                 "name": "Body",
-                 "in": "body",
-                 "required": true,
-                 "description": "",
-                 "schema": {
-                    "$ref": "#/definitions/CreateNewItemRequest"
-                 }
-              }
-           ],
-           "responses": {
-              "200": {
-                 "description": "",
-                 "headers": {}
-              }
-           }
-        }
-     },
-     "/items/602ca11a1a73ee0c87a2583b": {
-        "get": {
-           "description": "Get single Item by id",
-           "summary": "Get Single Item",
-           "tags": [
-              "Item"
-           ],
-           "operationId": "GetSingleItem",
-           "deprecated": false,
-           "produces": [
-              "application/json"
-           ],
-           "parameters": [
-              {
-                 "name": "Authorization",
-                 "in": "header",
-                 "required": false,
-                 "default": "Bearer {token}",
-                 "type": "string"
-              }
-           ],
-           "responses": {
-              "200": {
-                 "description": "",
-                 "headers": {}
-              }
-           }
-        },
-        "put": {
-           "description": "Updates Item in database",
-           "summary": "Update Item",
-           "tags": [
-              "Item"
-           ],
-           "operationId": "UpdateItem",
-           "deprecated": false,
-           "produces": [
-              "application/json"
-           ],
-           "consumes": [
-              "application/json"
-           ],
-           "parameters": [
-              {
-                 "name": "Authorization",
-                 "in": "header",
-                 "required": false,
-                 "default": "Bearer {token}",
-                 "type": "string"
-              },
-              {
-                 "name": "Content-Type",
-                 "in": "header",
-                 "required": true,
-                 "type": "string",
-                 "description": "JSON Type"
-              },
-              {
-                 "name": "Body",
-                 "in": "body",
-                 "required": true,
-                 "description": "",
-                 "schema": {
-                    "$ref": "#/definitions/UpdateItemRequest"
-                 }
-              }
-           ],
-           "responses": {
-              "200": {
-                 "description": "",
-                 "headers": {}
-              }
-           }
-        }
-     },
-     "/items/601f0124bef0d51b0f2f5529": {
-        "delete": {
-           "description": "Deletes items from database",
-           "summary": "Delete Item",
-           "tags": [
-              "Item"
-           ],
-           "operationId": "DeleteItem",
-           "deprecated": false,
-           "produces": [
-              "application/json"
-           ],
-           "parameters": [
-              {
-                 "name": "Authorization",
-                 "in": "header",
-                 "required": false,
-                 "default": "Bearer {token}",
-                 "type": "string"
-              }
-           ],
-           "responses": {
-              "200": {
-                 "description": "",
-                 "headers": {}
-              }
-           }
-        }
-     },
-     "/items/602d017980b0a5147253f8aa/photo": {
-        "put": {
-           "description": "Route of upload a Item photo",
-           "summary": "Upload Item Photo",
-           "tags": [
-              "Item"
-           ],
-           "operationId": "UploadItemPhoto",
-           "deprecated": false,
-           "produces": [
-              "application/json"
-           ],
-           "consumes": [
-              "application/x-www-form-urlencoded"
-           ],
-           "parameters": [
-              {
-                 "name": "Authorization",
-                 "in": "header",
-                 "required": false,
-                 "default": "Bearer {token}",
-                 "type": "string"
-              },
-              {
-                 "name": "Content-Type",
-                 "in": "header",
-                 "required": true,
-                 "type": "string",
-                 "description": "JSON Type"
-              },
-              {
-                 "name": "file",
-                 "in": "formData",
-                 "required": true,
-                 "type": "string",
-                 "description": ""
-              }
-           ],
-           "responses": {
-              "200": {
-                 "description": "",
-                 "headers": {}
-              }
-           }
-        }
-     },
-     "/orders": {
-        "get": {
-           "description": "Fetch all Orders from database",
-           "summary": "Get All Orders",
-           "tags": [
-              "Order"
-           ],
-           "operationId": "GetAllOrders",
-           "deprecated": false,
-           "produces": [
-              "application/json"
-           ],
-           "parameters": [
-              {
-                 "name": "Authorization",
-                 "in": "header",
-                 "required": false,
-                 "default": "Bearer {token}",
-                 "type": "string"
-              }
-           ],
-           "responses": {
-              "200": {
-                 "description": "",
-                 "headers": {}
-              }
-           }
-        }
-     },
-     "/orders/6046b01b7c50510015eb3e5e": {
-        "get": {
-           "description": "Get single Order by id",
-           "summary": "Get Single Order",
-           "tags": [
-              "Order"
-           ],
-           "operationId": "GetSingleOrder",
-           "deprecated": false,
-           "produces": [
-              "application/json"
-           ],
-           "parameters": [
-              {
-                 "name": "Authorization",
-                 "in": "header",
-                 "required": false,
-                 "default": "Bearer {token}",
-                 "type": "string"
-              }
-           ],
-           "responses": {
-              "200": {
-                 "description": "",
-                 "headers": {}
-              }
-           }
-        }
-     },
-     "/items/6044fe337acbc1370a5b649d/orders": {
-        "post": {
-           "description": "Add new Order to database",
-           "summary": "Create New Order",
-           "tags": [
-              "Order"
-           ],
-           "operationId": "CreateNewOrder",
-           "deprecated": false,
-           "produces": [
-              "application/json"
-           ],
-           "consumes": [
-              "application/json"
-           ],
-           "parameters": [
-              {
-                 "name": "Authorization",
-                 "in": "header",
-                 "required": false,
-                 "default": "Bearer {token}",
-                 "type": "string"
-              },
-              {
-                 "name": "Content-Type",
-                 "in": "header",
-                 "required": true,
-                 "type": "string",
-                 "description": "JSON Type"
-              },
-              {
-                 "name": "Body",
-                 "in": "body",
-                 "required": true,
-                 "description": "",
-                 "schema": {
-                    "$ref": "#/definitions/CreateNewOrderRequest"
-                 }
-              }
-           ],
-           "responses": {
-              "200": {
-                 "description": "",
-                 "headers": {}
-              }
-           }
-        }
-     },
-     "/items/602ca11a1a73ee0c87a2583d/orders/6046b01b7c50510015eb3e5e": {
-        "put": {
-           "description": "Updates Order in database",
-           "summary": "Update Order",
-           "tags": [
-              "Order"
-           ],
-           "operationId": "UpdateOrder",
-           "deprecated": false,
-           "produces": [
-              "application/json"
-           ],
-           "consumes": [
-              "application/json"
-           ],
-           "parameters": [
-              {
-                 "name": "Authorization",
-                 "in": "header",
-                 "required": false,
-                 "default": "Bearer {token}",
-                 "type": "string"
-              },
-              {
-                 "name": "Content-Type",
-                 "in": "header",
-                 "required": true,
-                 "type": "string",
-                 "description": "JSON Type"
-              },
-              {
-                 "name": "Body",
-                 "in": "body",
-                 "required": true,
-                 "description": "",
-                 "schema": {
-                    "$ref": "#/definitions/UpdateOrderRequest"
-                 }
-              }
-           ],
-           "responses": {
-              "200": {
-                 "description": "",
-                 "headers": {}
-              }
-           }
-        }
-     },
-     "/orders/601f0124bef0d51b0f2f5529": {
-        "delete": {
-           "description": "Deletes orders from database",
-           "summary": "Delete Order",
-           "tags": [
-              "Order"
-           ],
-           "operationId": "DeleteOrder",
-           "deprecated": false,
-           "produces": [
-              "application/json"
-           ],
-           "parameters": [
-              {
-                 "name": "Authorization",
-                 "in": "header",
-                 "required": false,
-                 "default": "Bearer {token}",
-                 "type": "string"
-              }
-           ],
-           "responses": {
-              "200": {
-                 "description": "",
-                 "headers": {}
-              }
-           }
-        }
-     },
-     "/billings": {
-        "get": {
-           "description": "Fetch all User Billings from database",
-           "summary": "Get All Billings",
-           "tags": [
-              "Billing"
-           ],
-           "operationId": "GetAllBillings",
-           "deprecated": false,
-           "produces": [
-              "application/json"
-           ],
-           "parameters": [
-              {
-                 "name": "Authorization",
-                 "in": "header",
-                 "required": false,
-                 "default": "Bearer {token}",
-                 "type": "string"
-              }
-           ],
-           "responses": {
-              "200": {
-                 "description": "",
-                 "headers": {}
-              }
-           }
-        }
-     },
-     "/billings/604402011f98e05368926f5d": {
-        "get": {
-           "description": "Get single User Billing by id",
-           "summary": "Get Single Billing",
-           "tags": [
-              "Billing"
-           ],
-           "operationId": "GetSingleBilling",
-           "deprecated": false,
-           "produces": [
-              "application/json"
-           ],
-           "parameters": [
-              {
-                 "name": "Authorization",
-                 "in": "header",
-                 "required": false,
-                 "default": "Bearer {token}",
-                 "type": "string"
-              }
-           ],
-           "responses": {
-              "200": {
-                 "description": "",
-                 "headers": {}
-              }
-           }
-        }
-     },
-     "/orders/6046f5ab3e6c1f0015b1b7b7/billings": {
-        "post": {
-           "description": "Add new User Billing to database",
-           "summary": "Create New Billing",
-           "tags": [
-              "Billing"
-           ],
-           "operationId": "CreateNewBilling",
-           "deprecated": false,
-           "produces": [
-              "application/json"
-           ],
-           "consumes": [
-              "application/json"
-           ],
-           "parameters": [
-              {
-                 "name": "Authorization",
-                 "in": "header",
-                 "required": false,
-                 "default": "Bearer {token}",
-                 "type": "string"
-              },
-              {
-                 "name": "Content-Type",
-                 "in": "header",
-                 "required": true,
-                 "type": "string",
-                 "description": "JSON Type"
-              },
-              {
-                 "name": "Body",
-                 "in": "body",
-                 "required": true,
-                 "description": "",
-                 "schema": {
-                    "$ref": "#/definitions/CreateNewBillingRequest"
-                 }
-              }
-           ],
-           "responses": {
-              "200": {
-                 "description": "",
-                 "headers": {}
-              }
-           }
-        }
-     },
-     "/billings/604fee5304af8392212f40d8": {
-        "put": {
-           "description": "Updates User Billing in database",
-           "summary": "Update Billing",
-           "tags": [
-              "Billing"
-           ],
-           "operationId": "UpdateBilling",
-           "deprecated": false,
-           "produces": [
-              "application/json"
-           ],
-           "consumes": [
-              "application/json"
-           ],
-           "parameters": [
-              {
-                 "name": "Authorization",
-                 "in": "header",
-                 "required": false,
-                 "default": "Bearer {token}",
-                 "type": "string"
-              },
-              {
-                 "name": "Content-Type",
-                 "in": "header",
-                 "required": true,
-                 "type": "string",
-                 "description": "JSON Type"
-              },
-              {
-                 "name": "Body",
-                 "in": "body",
-                 "required": true,
-                 "description": "",
-                 "schema": {
-                    "$ref": "#/definitions/UpdateBillingRequest"
-                 }
-              }
-           ],
-           "responses": {
-              "200": {
-                 "description": "",
-                 "headers": {}
-              }
-           }
-        }
-     },
-     "/billings/604408c88e85f6720bd7d221": {
-        "delete": {
-           "description": "Deletes User Billing from database",
-           "summary": "Delete Billing",
-           "tags": [
-              "Billing"
-           ],
-           "operationId": "DeleteBilling",
-           "deprecated": false,
-           "produces": [
-              "application/json"
-           ],
-           "parameters": [
-              {
-                 "name": "Authorization",
-                 "in": "header",
-                 "required": false,
-                 "default": "Bearer {token}",
-                 "type": "string"
-              }
-           ],
-           "responses": {
-              "200": {
-                 "description": "",
-                 "headers": {}
-              }
-           }
-        }
-     },
-     "/billings/radius/m4x1g5/0.5": {
-        "get": {
-           "description": "Get user withing a specified radius of a postal code",
-           "summary": "Get User Within a Radius of a Postal Code",
-           "tags": [
-              "Billing"
-           ],
-           "operationId": "GetUserWithinaRadiusofaPostalCode",
-           "deprecated": false,
-           "produces": [
-              "application/json"
-           ],
-           "parameters": [
-              {
-                 "name": "Authorization",
-                 "in": "header",
-                 "required": false,
-                 "default": "Bearer {token}",
-                 "type": "string"
-              }
-           ],
-           "responses": {
-              "200": {
-                 "description": "",
-                 "headers": {}
-              }
-           }
-        }
-     },
-     "/auth/register": {
-        "post": {
-           "description": "Add user to database with encrypted password",
-           "summary": "Register User",
-           "tags": [
-              "Authentication"
-           ],
-           "operationId": "RegisterUser",
-           "deprecated": false,
-           "produces": [
-              "application/json"
-           ],
-           "consumes": [
-              "application/json"
-           ],
-           "parameters": [
-              {
-                 "name": "Authorization",
-                 "in": "header",
-                 "required": false,
-                 "default": "Bearer {token}",
-                 "type": "string"
-              },
-              {
-                 "name": "Content-Type",
-                 "in": "header",
-                 "required": true,
-                 "type": "string",
-                 "description": "JSON Type"
-              },
-              {
-                 "name": "Body",
-                 "in": "body",
-                 "required": true,
-                 "description": "",
-                 "schema": {
-                    "$ref": "#/definitions/RegisterUserRequest"
-                 }
-              }
-           ],
-           "responses": {
-              "200": {
-                 "description": "",
-                 "headers": {}
-              }
-           }
-        }
-     },
-     "/auth/login": {
-        "post": {
-           "summary": "Login User",
-           "tags": [
-              "Authentication"
-           ],
-           "operationId": "LoginUser",
-           "deprecated": false,
-           "produces": [
-              "application/json"
-           ],
-           "consumes": [
-              "application/json"
-           ],
-           "parameters": [
-              {
-                 "name": "Authorization",
-                 "in": "header",
-                 "required": false,
-                 "default": "Bearer {token}",
-                 "type": "string"
-              },
-              {
-                 "name": "Content-Type",
-                 "in": "header",
-                 "required": true,
-                 "type": "string",
-                 "description": "JSON Type"
-              },
-              {
-                 "name": "Body",
-                 "in": "body",
-                 "required": true,
-                 "description": "",
-                 "schema": {
-                    "$ref": "#/definitions/LoginUserRequest"
-                 }
-              }
-           ],
-           "responses": {
-              "200": {
-                 "description": "",
-                 "headers": {}
-              }
-           }
-        }
-     },
-     "/auth/me": {
-        "get": {
-           "summary": "Get Logged in User via Token",
-           "tags": [
-              "Authentication"
-           ],
-           "operationId": "GetLoggedinUserviaToken",
-           "deprecated": false,
-           "produces": [
-              "application/json"
-           ],
-           "consumes": [
-              "application/json"
-           ],
-           "parameters": [
-              {
-                 "name": "Authorization",
-                 "in": "header",
-                 "required": false,
-                 "default": "Bearer {token}",
-                 "type": "string"
-              },
-              {
-                 "name": "Content-Type",
-                 "in": "header",
-                 "required": true,
-                 "type": "string",
-                 "description": "JSON Type"
-              }
-           ],
-           "responses": {
-              "200": {
-                 "description": "",
-                 "headers": {}
-              }
-           }
-        }
-     },
-     "/auth/logout": {
-        "get": {
-           "description": "Clear token cookie",
-           "summary": "Logout  User",
-           "tags": [
-              "Authentication"
-           ],
-           "operationId": "LogoutUser",
-           "deprecated": false,
-           "produces": [
-              "application/json"
-           ],
-           "parameters": [
-              {
-                 "name": "Authorization",
-                 "in": "header",
-                 "required": false,
-                 "default": "Bearer {token}",
-                 "type": "string"
-              }
-           ],
-           "responses": {
-              "200": {
-                 "description": "",
-                 "headers": {}
-              }
-           }
-        }
-     },
-     "/users": {
-        "get": {
-           "description": "Get All Users (admin)",
-           "summary": "Get All Users (admin)",
-           "tags": [
-              "Users"
-           ],
-           "operationId": "GetAllUsers(admin)",
-           "deprecated": false,
-           "produces": [
-              "application/json"
-           ],
-           "parameters": [
-              {
-                 "name": "Authorization",
-                 "in": "header",
-                 "required": false,
-                 "default": "Bearer {token}",
-                 "type": "string"
-              }
-           ],
-           "responses": {
-              "200": {
-                 "description": "",
-                 "headers": {}
-              }
-           }
-        },
-        "post": {
-           "description": "Add user to database (admin)",
-           "summary": "Create User (admin)",
-           "tags": [
-              "Users"
-           ],
-           "operationId": "CreateUser(admin)",
-           "deprecated": false,
-           "produces": [
-              "application/json"
-           ],
-           "consumes": [
-              "application/json"
-           ],
-           "parameters": [
-              {
-                 "name": "Authorization",
-                 "in": "header",
-                 "required": false,
-                 "default": "Bearer {token}",
-                 "type": "string"
-              },
-              {
-                 "name": "Content-Type",
-                 "in": "header",
-                 "required": true,
-                 "type": "string",
-                 "description": "JSON Type"
-              },
-              {
-                 "name": "Body",
-                 "in": "body",
-                 "required": true,
-                 "description": "",
-                 "schema": {
-                    "$ref": "#/definitions/CreateUser%28admin%29Request"
-                 }
-              }
-           ],
-           "responses": {
-              "200": {
-                 "description": "",
-                 "headers": {}
-              }
-           }
-        }
-     },
-     "/users/602c33597ae32821327bc3c0": {
-        "get": {
-           "description": "Get single user by ID (admin)",
-           "summary": "Get Single User (admin)",
-           "tags": [
-              "Users"
-           ],
-           "operationId": "GetSingleUser(admin)",
-           "deprecated": false,
-           "produces": [
-              "application/json"
-           ],
-           "parameters": [
-              {
-                 "name": "Authorization",
-                 "in": "header",
-                 "required": false,
-                 "default": "Bearer {token}",
-                 "type": "string"
-              }
-           ],
-           "responses": {
-              "200": {
-                 "description": "",
-                 "headers": {}
-              }
-           }
-        },
-        "put": {
-           "description": "Update user by ID (admin)",
-           "summary": "Update User (admin)",
-           "tags": [
-              "Users"
-           ],
-           "operationId": "UpdateUser(admin)",
-           "deprecated": false,
-           "produces": [
-              "application/json"
-           ],
-           "parameters": [
-              {
-                 "name": "Authorization",
-                 "in": "header",
-                 "required": false,
-                 "default": "Bearer {token}",
-                 "type": "string"
-              },
-              {
-                 "name": "Body",
-                 "in": "body",
-                 "required": true,
-                 "description": "",
-                 "schema": {
-                    "$ref": "#/definitions/UpdateUser%28admin%29Request"
-                 }
-              }
-           ],
-           "responses": {
-              "200": {
-                 "description": "",
-                 "headers": {}
-              }
-           }
-        }
-     },
-     "/users/602f0e3eee1f7184a55bc658": {
-        "delete": {
-           "description": "Delete user from database (admin)",
-           "summary": "Delete User (admin)",
-           "tags": [
-              "Users"
-           ],
-           "operationId": "DeleteUser(admin)",
-           "deprecated": false,
-           "produces": [
-              "application/json"
-           ],
-           "parameters": [
-              {
-                 "name": "Authorization",
-                 "in": "header",
-                 "required": false,
-                 "default": "Bearer {token}",
-                 "type": "string"
-              }
-           ],
-           "responses": {
-              "200": {
-                 "description": "",
-                 "headers": {}
-              }
-           }
-        }
-     }
-  },
-  "definitions": {
-     "CreateNewItemRequest": {
-        "title": "CreateNewItemRequest",
-        "example": {
-           "title": "Cacio e Pepe Potato Gnocchi4444",
-           "description": " We tossed our gnocchi in plenty of Parmesan and butter for a simple Cacio e Pepe vibe, but we also have a Tuscan Butter Gnocchi that we dream about regularly. ",
-           "unitPrice": 10.99,
-           "type": "combo"
-        },
-        "type": "object",
-        "properties": {
-           "title": {
-              "type": "string"
-           },
-           "description": {
-              "type": "string"
-           },
-           "unitPrice": {
-              "type": "number",
-              "format": "double"
-           },
-           "type": {
-              "type": "string"
-           }
-        },
-        "required": [
-           "title",
-           "description",
-           "unitPrice",
-           "type"
-        ]
-     },
-     "UpdateItemRequest": {
-        "title": "UpdateItemRequest",
-        "example": {
-           "quantity": 5
-        },
-        "type": "object",
-        "properties": {
-           "quantity": {
-              "type": "integer",
-              "format": "int32"
-           }
-        },
-        "required": [
-           "quantity"
-        ]
-     },
-     "CreateNewOrderRequest": {
-        "title": "CreateNewOrderRequest",
-        "example": {
-           "orderType": "pickup",
-           "quantity": 3
-        },
-        "type": "object",
-        "properties": {
-           "orderType": {
-              "type": "string"
-           },
-           "quantity": {
-              "type": "integer",
-              "format": "int32"
-           }
-        },
-        "required": [
-           "orderType",
-           "quantity"
-        ]
-     },
-     "UpdateOrderRequest": {
-        "title": "UpdateOrderRequest",
-        "example": {
-           "orderType": "pickup"
-        },
-        "type": "object",
-        "properties": {
-           "orderType": {
-              "type": "string"
-           }
-        },
-        "required": [
-           "orderType"
-        ]
-     },
-     "CreateNewBillingRequest": {
-        "title": "CreateNewBillingRequest",
-        "example": {
-           "address": "240 Bloor St East, Toronto, ON"
-        },
-        "type": "object",
-        "properties": {
-           "address": {
-              "type": "string"
-           }
-        },
-        "required": [
-           "address"
-        ]
-     },
-     "UpdateBillingRequest": {
-        "title": "UpdateBillingRequest",
-        "example": {
-           "address": "240 Bloor St East, Toronto, ON"
-        },
-        "type": "object",
-        "properties": {
-           "address": {
-              "type": "string"
-           }
-        },
-        "required": [
-           "address"
-        ]
-     },
-     "RegisterUserRequest": {
-        "title": "RegisterUserRequest",
-        "example": {
-           "name": "Admin55785",
-           "email": "admin5575@gmail.com",
-           "password": "123456",
-           "phone": "4567894567",
-           "address": {
-              "streetNumber": 240,
-              "streetName": "Wellesley St E",
-              "apartmentNumber": 256,
-              "city": "Toronto",
-              "province": "ON",
-              "postalCode": "M4X 1R5"
-           }
-        },
-        "type": "object",
-        "properties": {
-           "name": {
-              "type": "string"
-           },
-           "email": {
-              "type": "string"
-           },
-           "password": {
-              "type": "string"
-           },
-           "phone": {
-              "type": "string"
-           },
-           "address": {
-              "$ref": "#/definitions/Address"
-           }
-        },
-        "required": [
-           "name",
-           "email",
-           "password",
-           "phone",
-           "address"
-        ]
-     },
-     "Address": {
-        "title": "Address",
-        "example": {
-           "streetNumber": 240,
-           "streetName": "Wellesley St E",
-           "apartmentNumber": 256,
-           "city": "Toronto",
-           "province": "ON",
-           "postalCode": "M4X 1R5"
-        },
-        "type": "object",
-        "properties": {
-           "streetNumber": {
-              "type": "integer",
-              "format": "int32"
-           },
-           "streetName": {
-              "type": "string"
-           },
-           "apartmentNumber": {
-              "type": "integer",
-              "format": "int32"
-           },
-           "city": {
-              "type": "string"
-           },
-           "province": {
-              "type": "string"
-           },
-           "postalCode": {
-              "type": "string"
-           }
-        },
-        "required": [
-           "streetNumber",
-           "streetName",
-           "apartmentNumber",
-           "city",
-           "province",
-           "postalCode"
-        ]
-     },
-     "LoginUserRequest": {
+   "swagger": "2.0",
+   "info": {
+      "version": "1.0",
+      "title": "La Villa Pasta REST API",
+      "description": "Backend REST API for La Villa Pasta to manage items, orders and users",
+      "contact": {}
+   },
+   "host": "la-villa-pasta-backend.herokuapp.com",
+   "basePath": "/",
+   "securityDefinitions": {},
+   "schemes": [
+      "https"
+   ],
+   "consumes": [
+      "application/json"
+   ],
+   "produces": [
+      "application/json"
+   ],
+   "paths": {
+      "/items": {
+         "get": {
+            "description": "Fetch all Items from database",
+            "summary": "Get All Items",
+            "tags": [
+               "Item"
+            ],
+            "operationId": "GetAllItems",
+            "deprecated": false,
+            "produces": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "required": false,
+                  "default": "Bearer {token}",
+                  "type": "string"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "",
+                  "headers": {}
+               }
+            }
+         },
+         "post": {
+            "description": "Add new Item to database",
+            "summary": "Create New Item",
+            "tags": [
+               "Item"
+            ],
+            "operationId": "CreateNewItem",
+            "deprecated": false,
+            "produces": [
+               "application/json"
+            ],
+            "consumes": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "required": false,
+                  "default": "Bearer {token}",
+                  "type": "string"
+               },
+               {
+                  "name": "Content-Type",
+                  "in": "header",
+                  "required": true,
+                  "type": "string",
+                  "description": "JSON Type"
+               },
+               {
+                  "name": "Body",
+                  "in": "body",
+                  "required": true,
+                  "description": "",
+                  "schema": {
+                     "$ref": "#/definitions/CreateNewItemRequest"
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "",
+                  "headers": {}
+               }
+            }
+         }
+      },
+      "/items/602ca11a1a73ee0c87a2583b": {
+         "get": {
+            "description": "Get single Item by id",
+            "summary": "Get Single Item",
+            "tags": [
+               "Item"
+            ],
+            "operationId": "GetSingleItem",
+            "deprecated": false,
+            "produces": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "required": false,
+                  "default": "Bearer {token}",
+                  "type": "string"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "",
+                  "headers": {}
+               }
+            }
+         },
+         "put": {
+            "description": "Updates Item in database",
+            "summary": "Update Item",
+            "tags": [
+               "Item"
+            ],
+            "operationId": "UpdateItem",
+            "deprecated": false,
+            "produces": [
+               "application/json"
+            ],
+            "consumes": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "required": false,
+                  "default": "Bearer {token}",
+                  "type": "string"
+               },
+               {
+                  "name": "Content-Type",
+                  "in": "header",
+                  "required": true,
+                  "type": "string",
+                  "description": "JSON Type"
+               },
+               {
+                  "name": "Body",
+                  "in": "body",
+                  "required": true,
+                  "description": "",
+                  "schema": {
+                     "$ref": "#/definitions/UpdateItemRequest"
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "",
+                  "headers": {}
+               }
+            }
+         }
+      },
+      "/items/601f0124bef0d51b0f2f5529": {
+         "delete": {
+            "description": "Deletes items from database",
+            "summary": "Delete Item",
+            "tags": [
+               "Item"
+            ],
+            "operationId": "DeleteItem",
+            "deprecated": false,
+            "produces": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "required": false,
+                  "default": "Bearer {token}",
+                  "type": "string"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "",
+                  "headers": {}
+               }
+            }
+         }
+      },
+      "/items/602d017980b0a5147253f8aa/photo": {
+         "put": {
+            "description": "Route of upload a Item photo",
+            "summary": "Upload Item Photo",
+            "tags": [
+               "Item"
+            ],
+            "operationId": "UploadItemPhoto",
+            "deprecated": false,
+            "produces": [
+               "application/json"
+            ],
+            "consumes": [
+               "application/x-www-form-urlencoded"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "required": false,
+                  "default": "Bearer {token}",
+                  "type": "string"
+               },
+               {
+                  "name": "Content-Type",
+                  "in": "header",
+                  "required": true,
+                  "type": "string",
+                  "description": "JSON Type"
+               },
+               {
+                  "name": "file",
+                  "in": "formData",
+                  "required": true,
+                  "type": "string",
+                  "description": ""
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "",
+                  "headers": {}
+               }
+            }
+         }
+      },
+      "/orders": {
+         "get": {
+            "description": "Fetch all Orders from database",
+            "summary": "Get All Orders",
+            "tags": [
+               "Order"
+            ],
+            "operationId": "GetAllOrders",
+            "deprecated": false,
+            "produces": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "required": false,
+                  "default": "Bearer {token}",
+                  "type": "string"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "",
+                  "headers": {}
+               }
+            }
+         }
+      },
+      "/orders/6046b01b7c50510015eb3e5e": {
+         "get": {
+            "description": "Get single Order by id",
+            "summary": "Get Single Order",
+            "tags": [
+               "Order"
+            ],
+            "operationId": "GetSingleOrder",
+            "deprecated": false,
+            "produces": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "required": false,
+                  "default": "Bearer {token}",
+                  "type": "string"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "",
+                  "headers": {}
+               }
+            }
+         }
+      },
+      "/items/6044fe337acbc1370a5b649d/orders": {
+         "post": {
+            "description": "Add new Order to database",
+            "summary": "Create New Order",
+            "tags": [
+               "Order"
+            ],
+            "operationId": "CreateNewOrder",
+            "deprecated": false,
+            "produces": [
+               "application/json"
+            ],
+            "consumes": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "required": false,
+                  "default": "Bearer {token}",
+                  "type": "string"
+               },
+               {
+                  "name": "Content-Type",
+                  "in": "header",
+                  "required": true,
+                  "type": "string",
+                  "description": "JSON Type"
+               },
+               {
+                  "name": "Body",
+                  "in": "body",
+                  "required": true,
+                  "description": "",
+                  "schema": {
+                     "$ref": "#/definitions/CreateNewOrderRequest"
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "",
+                  "headers": {}
+               }
+            }
+         }
+      },
+      "/items/602ca11a1a73ee0c87a2583d/orders/6046b01b7c50510015eb3e5e": {
+         "put": {
+            "description": "Updates Order in database",
+            "summary": "Update Order",
+            "tags": [
+               "Order"
+            ],
+            "operationId": "UpdateOrder",
+            "deprecated": false,
+            "produces": [
+               "application/json"
+            ],
+            "consumes": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "required": false,
+                  "default": "Bearer {token}",
+                  "type": "string"
+               },
+               {
+                  "name": "Content-Type",
+                  "in": "header",
+                  "required": true,
+                  "type": "string",
+                  "description": "JSON Type"
+               },
+               {
+                  "name": "Body",
+                  "in": "body",
+                  "required": true,
+                  "description": "",
+                  "schema": {
+                     "$ref": "#/definitions/UpdateOrderRequest"
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "",
+                  "headers": {}
+               }
+            }
+         }
+      },
+      "/orders/601f0124bef0d51b0f2f5529": {
+         "delete": {
+            "description": "Deletes orders from database",
+            "summary": "Delete Order",
+            "tags": [
+               "Order"
+            ],
+            "operationId": "DeleteOrder",
+            "deprecated": false,
+            "produces": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "required": false,
+                  "default": "Bearer {token}",
+                  "type": "string"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "",
+                  "headers": {}
+               }
+            }
+         }
+      },
+      "/billings": {
+         "get": {
+            "description": "Fetch all User Billings from database",
+            "summary": "Get All Billings",
+            "tags": [
+               "Billing"
+            ],
+            "operationId": "GetAllBillings",
+            "deprecated": false,
+            "produces": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "required": false,
+                  "default": "Bearer {token}",
+                  "type": "string"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "",
+                  "headers": {}
+               }
+            }
+         }
+      },
+      "/billings/604402011f98e05368926f5d": {
+         "get": {
+            "description": "Get single User Billing by id",
+            "summary": "Get Single Billing",
+            "tags": [
+               "Billing"
+            ],
+            "operationId": "GetSingleBilling",
+            "deprecated": false,
+            "produces": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "required": false,
+                  "default": "Bearer {token}",
+                  "type": "string"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "",
+                  "headers": {}
+               }
+            }
+         }
+      },
+      "/orders/6046f5ab3e6c1f0015b1b7b7/billings": {
+         "post": {
+            "description": "Add new User Billing to database",
+            "summary": "Create New Billing",
+            "tags": [
+               "Billing"
+            ],
+            "operationId": "CreateNewBilling",
+            "deprecated": false,
+            "produces": [
+               "application/json"
+            ],
+            "consumes": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "required": false,
+                  "default": "Bearer {token}",
+                  "type": "string"
+               },
+               {
+                  "name": "Content-Type",
+                  "in": "header",
+                  "required": true,
+                  "type": "string",
+                  "description": "JSON Type"
+               },
+               {
+                  "name": "Body",
+                  "in": "body",
+                  "required": true,
+                  "description": "",
+                  "schema": {
+                     "$ref": "#/definitions/CreateNewBillingRequest"
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "",
+                  "headers": {}
+               }
+            }
+         }
+      },
+      "/billings/604fee5304af8392212f40d8": {
+         "put": {
+            "description": "Updates User Billing in database",
+            "summary": "Update Billing",
+            "tags": [
+               "Billing"
+            ],
+            "operationId": "UpdateBilling",
+            "deprecated": false,
+            "produces": [
+               "application/json"
+            ],
+            "consumes": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "required": false,
+                  "default": "Bearer {token}",
+                  "type": "string"
+               },
+               {
+                  "name": "Content-Type",
+                  "in": "header",
+                  "required": true,
+                  "type": "string",
+                  "description": "JSON Type"
+               },
+               {
+                  "name": "Body",
+                  "in": "body",
+                  "required": true,
+                  "description": "",
+                  "schema": {
+                     "$ref": "#/definitions/UpdateBillingRequest"
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "",
+                  "headers": {}
+               }
+            }
+         }
+      },
+      "/billings/604408c88e85f6720bd7d221": {
+         "delete": {
+            "description": "Deletes User Billing from database",
+            "summary": "Delete Billing",
+            "tags": [
+               "Billing"
+            ],
+            "operationId": "DeleteBilling",
+            "deprecated": false,
+            "produces": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "required": false,
+                  "default": "Bearer {token}",
+                  "type": "string"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "",
+                  "headers": {}
+               }
+            }
+         }
+      },
+      "/billings/radius/m4x1g5/0.5": {
+         "get": {
+            "description": "Get user withing a specified radius of a postal code",
+            "summary": "Get User Within a Radius of a Postal Code",
+            "tags": [
+               "Billing"
+            ],
+            "operationId": "GetUserWithinaRadiusofaPostalCode",
+            "deprecated": false,
+            "produces": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "required": false,
+                  "default": "Bearer {token}",
+                  "type": "string"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "",
+                  "headers": {}
+               }
+            }
+         }
+      },
+      "/auth/register": {
+         "post": {
+            "description": "Add user to database with encrypted password",
+            "summary": "Register User",
+            "tags": [
+               "Authentication"
+            ],
+            "operationId": "RegisterUser",
+            "deprecated": false,
+            "produces": [
+               "application/json"
+            ],
+            "consumes": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "required": false,
+                  "default": "Bearer {token}",
+                  "type": "string"
+               },
+               {
+                  "name": "Content-Type",
+                  "in": "header",
+                  "required": true,
+                  "type": "string",
+                  "description": "JSON Type"
+               },
+               {
+                  "name": "Body",
+                  "in": "body",
+                  "required": true,
+                  "description": "",
+                  "schema": {
+                     "$ref": "#/definitions/RegisterUserRequest"
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "",
+                  "headers": {}
+               }
+            }
+         }
+      },
+      "/auth/login": {
+         "post": {
+            "summary": "Login User",
+            "tags": [
+               "Authentication"
+            ],
+            "operationId": "LoginUser",
+            "deprecated": false,
+            "produces": [
+               "application/json"
+            ],
+            "consumes": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "required": false,
+                  "default": "Bearer {token}",
+                  "type": "string"
+               },
+               {
+                  "name": "Content-Type",
+                  "in": "header",
+                  "required": true,
+                  "type": "string",
+                  "description": "JSON Type"
+               },
+               {
+                  "name": "Body",
+                  "in": "body",
+                  "required": true,
+                  "description": "",
+                  "schema": {
+                     "$ref": "#/definitions/LoginUserRequest"
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "",
+                  "headers": {}
+               }
+            }
+         }
+      },
+      "/auth/me": {
+         "get": {
+            "summary": "Get Logged in User via Token",
+            "tags": [
+               "Authentication"
+            ],
+            "operationId": "GetLoggedinUserviaToken",
+            "deprecated": false,
+            "produces": [
+               "application/json"
+            ],
+            "consumes": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "required": false,
+                  "default": "Bearer {token}",
+                  "type": "string"
+               },
+               {
+                  "name": "Content-Type",
+                  "in": "header",
+                  "required": true,
+                  "type": "string",
+                  "description": "JSON Type"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "",
+                  "headers": {}
+               }
+            }
+         }
+      },
+      "/auth/logout": {
+         "get": {
+            "description": "Clear token cookie",
+            "summary": "Logout  User",
+            "tags": [
+               "Authentication"
+            ],
+            "operationId": "LogoutUser",
+            "deprecated": false,
+            "produces": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "required": false,
+                  "default": "Bearer {token}",
+                  "type": "string"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "",
+                  "headers": {}
+               }
+            }
+         }
+      },
+      "/users": {
+         "get": {
+            "description": "Get All Users (admin)",
+            "summary": "Get All Users (admin)",
+            "tags": [
+               "Users"
+            ],
+            "operationId": "GetAllUsers(admin)",
+            "deprecated": false,
+            "produces": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "required": false,
+                  "default": "Bearer {token}",
+                  "type": "string"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "",
+                  "headers": {}
+               }
+            }
+         },
+         "post": {
+            "description": "Add user to database (admin)",
+            "summary": "Create User (admin)",
+            "tags": [
+               "Users"
+            ],
+            "operationId": "CreateUser(admin)",
+            "deprecated": false,
+            "produces": [
+               "application/json"
+            ],
+            "consumes": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "required": false,
+                  "default": "Bearer {token}",
+                  "type": "string"
+               },
+               {
+                  "name": "Content-Type",
+                  "in": "header",
+                  "required": true,
+                  "type": "string",
+                  "description": "JSON Type"
+               },
+               {
+                  "name": "Body",
+                  "in": "body",
+                  "required": true,
+                  "description": "",
+                  "schema": {
+                     "$ref": "#/definitions/CreateUser%28admin%29Request"
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "",
+                  "headers": {}
+               }
+            }
+         }
+      },
+      "/users/602c33597ae32821327bc3c0": {
+         "get": {
+            "description": "Get single user by ID (admin)",
+            "summary": "Get Single User (admin)",
+            "tags": [
+               "Users"
+            ],
+            "operationId": "GetSingleUser(admin)",
+            "deprecated": false,
+            "produces": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "required": false,
+                  "default": "Bearer {token}",
+                  "type": "string"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "",
+                  "headers": {}
+               }
+            }
+         },
+         "put": {
+            "description": "Update user by ID (admin)",
+            "summary": "Update User (admin)",
+            "tags": [
+               "Users"
+            ],
+            "operationId": "UpdateUser(admin)",
+            "deprecated": false,
+            "produces": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "required": false,
+                  "default": "Bearer {token}",
+                  "type": "string"
+               },
+               {
+                  "name": "Body",
+                  "in": "body",
+                  "required": true,
+                  "description": "",
+                  "schema": {
+                     "$ref": "#/definitions/UpdateUser%28admin%29Request"
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "",
+                  "headers": {}
+               }
+            }
+         }
+      },
+      "/users/602f0e3eee1f7184a55bc658": {
+         "delete": {
+            "description": "Delete user from database (admin)",
+            "summary": "Delete User (admin)",
+            "tags": [
+               "Users"
+            ],
+            "operationId": "DeleteUser(admin)",
+            "deprecated": false,
+            "produces": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "required": false,
+                  "default": "Bearer {token}",
+                  "type": "string"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "",
+                  "headers": {}
+               }
+            }
+         }
+      }
+   },
+   "definitions": {
+      "CreateNewItemRequest": {
+         "title": "CreateNewItemRequest",
+         "example": {
+            "title": "Cacio e Pepe Potato Gnocchi4444",
+            "description": " We tossed our gnocchi in plenty of Parmesan and butter for a simple Cacio e Pepe vibe, but we also have a Tuscan Butter Gnocchi that we dream about regularly. ",
+            "unitPrice": 10.99,
+            "type": "combo"
+         },
+         "type": "object",
+         "properties": {
+            "title": {
+               "type": "string"
+            },
+            "description": {
+               "type": "string"
+            },
+            "unitPrice": {
+               "type": "number",
+               "format": "double"
+            },
+            "type": {
+               "type": "string"
+            }
+         },
+         "required": [
+            "title",
+            "description",
+            "unitPrice",
+            "type"
+         ]
+      },
+      "UpdateItemRequest": {
+         "title": "UpdateItemRequest",
+         "example": {
+            "quantity": 5
+         },
+         "type": "object",
+         "properties": {
+            "quantity": {
+               "type": "integer",
+               "format": "int32"
+            }
+         },
+         "required": [
+            "quantity"
+         ]
+      },
+      "CreateNewOrderRequest": {
+         "title": "CreateNewOrderRequest",
+         "example": {
+            "orderType": "pickup",
+            "quantity": 3
+         },
+         "type": "object",
+         "properties": {
+            "orderType": {
+               "type": "string"
+            },
+            "quantity": {
+               "type": "integer",
+               "format": "int32"
+            }
+         },
+         "required": [
+            "orderType",
+            "quantity"
+         ]
+      },
+      "UpdateOrderRequest": {
+         "title": "UpdateOrderRequest",
+         "example": {
+            "orderType": "pickup"
+         },
+         "type": "object",
+         "properties": {
+            "orderType": {
+               "type": "string"
+            }
+         },
+         "required": [
+            "orderType"
+         ]
+      },
+      "CreateNewBillingRequest": {
+         "title": "CreateNewBillingRequest",
+         "example": {
+            "address": "240 Bloor St East, Toronto, ON"
+         },
+         "type": "object",
+         "properties": {
+            "address": {
+               "type": "string"
+            }
+         },
+         "required": [
+            "address"
+         ]
+      },
+      "UpdateBillingRequest": {
+         "title": "UpdateBillingRequest",
+         "example": {
+            "address": "240 Bloor St East, Toronto, ON"
+         },
+         "type": "object",
+         "properties": {
+            "address": {
+               "type": "string"
+            }
+         },
+         "required": [
+            "address"
+         ]
+      },
+      "RegisterUserRequest": {
+         "title": "RegisterUserRequest",
+         "example": {
+            "name": "Admin55785",
+            "email": "admin5575@gmail.com",
+            "password": "123456",
+            "phone": "4567894567",
+            "address": {
+               "streetNumber": 240,
+               "streetName": "Wellesley St E",
+               "apartmentNumber": 256,
+               "city": "Toronto",
+               "province": "ON",
+               "postalCode": "M4X 1R5"
+            }
+         },
+         "type": "object",
+         "properties": {
+            "name": {
+               "type": "string"
+            },
+            "email": {
+               "type": "string"
+            },
+            "password": {
+               "type": "string"
+            },
+            "phone": {
+               "type": "string"
+            },
+            "address": {
+               "$ref": "#/definitions/Address"
+            }
+         },
+         "required": [
+            "name",
+            "email",
+            "password",
+            "phone",
+            "address"
+         ]
+      },
+      "Address": {
+         "title": "Address",
+         "example": {
+            "streetNumber": 240,
+            "streetName": "Wellesley St E",
+            "apartmentNumber": 256,
+            "city": "Toronto",
+            "province": "ON",
+            "postalCode": "M4X 1R5"
+         },
+         "type": "object",
+         "properties": {
+            "streetNumber": {
+               "type": "integer",
+               "format": "int32"
+            },
+            "streetName": {
+               "type": "string"
+            },
+            "apartmentNumber": {
+               "type": "integer",
+               "format": "int32"
+            },
+            "city": {
+               "type": "string"
+            },
+            "province": {
+               "type": "string"
+            },
+            "postalCode": {
+               "type": "string"
+            }
+         },
+         "required": [
+            "streetNumber",
+            "streetName",
+            "apartmentNumber",
+            "city",
+            "province",
+            "postalCode"
+         ]
+      },
+      "LoginUserRequest": {
         "title": "LoginUserRequest",
         "example": {
-           "email": {
-              "$gt": ""
-           },
-           "password": "123456"
+          "email": "admin@gmail.com",
+          "password": "123456"
         },
         "type": "object",
         "properties": {
-           "email": {
-              "$ref": "#/definitions/Email"
-           },
-           "password": {
-              "type": "string"
-           }
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
         },
         "required": [
-           "email",
-           "password"
+          "email",
+          "password"
         ]
-     },
-     "Email": {
-        "title": "Email",
-        "example": {
-           "$gt": ""
-        },
-        "type": "object",
-        "properties": {
-           "$gt": {
-              "type": "string"
-           }
-        },
-        "required": [
-           "$gt"
-        ]
-     },
-     "CreateUser(admin)Request": {
-        "title": "CreateUser(admin)Request",
-        "example": {
-           "name": "Admin",
-           "email": "admin@gmail.com",
-           "password": "123456",
-           "address": {
-              "streetNumber": 240,
-              "streetName": "Wellesley St E",
-              "apartmentNumber": 256,
-              "city": "Toronto",
-              "province": "ON",
-              "postalCode": "M4X 1R5"
-           }
-        },
-        "type": "object",
-        "properties": {
-           "name": {
-              "type": "string"
-           },
-           "email": {
-              "type": "string"
-           },
-           "password": {
-              "type": "string"
-           },
-           "address": {
-              "$ref": "#/definitions/Address"
-           }
-        },
-        "required": [
-           "name",
-           "email",
-           "password",
-           "address"
-        ]
-     },
-     "UpdateUser(admin)Request": {
-        "title": "UpdateUser(admin)Request",
-        "example": {
-           "name": "Update Test"
-        },
-        "type": "object",
-        "properties": {
-           "name": {
-              "type": "string"
-           }
-        },
-        "required": [
-           "name"
-        ]
-     }
-  },
-  "tags": [
-     {
-        "name": "Item",
-        "description": "CRUD Functionality for Items"
-     },
-     {
-        "name": "Order",
-        "description": "CRUD Functionality for Items"
-     },
-     {
-        "name": "Billing",
-        "description": "CRUD Functionality for Items"
-     },
-     {
-        "name": "Authentication",
-        "description": "Routes for user authentication including register, login, reset password...."
-     },
-     {
-        "name": "Users",
-        "description": "CRUD Functionality for users only available to admins"
-     }
-  ]
+      },
+      "CreateUser(admin)Request": {
+         "title": "CreateUser(admin)Request",
+         "example": {
+            "name": "Admin",
+            "email": "admin@gmail.com",
+            "password": "123456",
+            "address": {
+               "streetNumber": 240,
+               "streetName": "Wellesley St E",
+               "apartmentNumber": 256,
+               "city": "Toronto",
+               "province": "ON",
+               "postalCode": "M4X 1R5"
+            }
+         },
+         "type": "object",
+         "properties": {
+            "name": {
+               "type": "string"
+            },
+            "email": {
+               "type": "string"
+            },
+            "password": {
+               "type": "string"
+            },
+            "address": {
+               "$ref": "#/definitions/Address"
+            }
+         },
+         "required": [
+            "name",
+            "email",
+            "password",
+            "address"
+         ]
+      },
+      "UpdateUser(admin)Request": {
+         "title": "UpdateUser(admin)Request",
+         "example": {
+            "name": "Update Test"
+         },
+         "type": "object",
+         "properties": {
+            "name": {
+               "type": "string"
+            }
+         },
+         "required": [
+            "name"
+         ]
+      }
+   },
+   "tags": [
+      {
+         "name": "Item",
+         "description": "CRUD Functionality for Items"
+      },
+      {
+         "name": "Order",
+         "description": "CRUD Functionality for Items"
+      },
+      {
+         "name": "Billing",
+         "description": "CRUD Functionality for Items"
+      },
+      {
+         "name": "Authentication",
+         "description": "Routes for user authentication including register, login, reset password...."
+      },
+      {
+         "name": "Users",
+         "description": "CRUD Functionality for users only available to admins"
+      }
+   ]
 }
