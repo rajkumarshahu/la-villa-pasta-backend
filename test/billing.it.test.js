@@ -218,4 +218,19 @@ describe('Should check billing end points', () => {
 
 
 	});
+
+	describe('GET /billings/radius/:zipcode/:distance', () => {
+		it('Should get user within a radius', (done) => {
+
+			chai
+				.request(server)
+				.get('/billings/radius/m4x1g5/0.5')
+				.end((err, res) => {
+					res.should.have.status(200);
+					res.body.success.should.be.eq(true);
+					done();
+				});
+		});
+	});
+
 });

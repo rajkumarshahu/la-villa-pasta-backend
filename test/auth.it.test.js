@@ -19,12 +19,16 @@ let token, userId;
 const user = {
 	name: 'rajshahau',
 	email: 'raj15@gmail.com',
+	phone: '1234567891',
 	password: '123456',
 	role: 'customer'
 }
 
 describe('Should test auth endpoints', () => {
 	before(function (done) {
+
+
+
 		authenticatedUser
 			.post('/auth/login')
 			.set('Accept', 'application/json')
@@ -63,6 +67,21 @@ describe('Should test auth endpoints', () => {
 			.set({ Authorization: `Bearer ${token}` })
 			.send(user)
 			.end((err, res) => {
+				done();
+			});
+    });
+
+	it('should not register duplicate user', function (done) {
+		chai
+			.request(server)
+			.post('/auth/register')
+			.set({ Authorization: `Bearer ${token}` })
+			.send(user)
+			.end((err, res) => {
+				res.should.have.status(400);
+					res.body.error.should.be.eq(
+						`Duplicate field value entered`
+					);
 				done();
 			});
     });

@@ -2,7 +2,10 @@ let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../server');
 var request = require('supertest');
+
+var sinon = require('sinon');
 const { use } = require('../routes/auth');
+
 
 // Assertion type
 chai.should();
@@ -32,6 +35,12 @@ let user = {
 
 describe('Should check user end points', () => {
 	before(function (done) {
+
+		sinon.stub(console, 'log')  // disable console.log
+        sinon.stub(console, 'info')  // disable console.info
+        sinon.stub(console, 'warn')  // disable console.warn
+        sinon.stub(console, 'error')  // disable console.error
+
 		authenticatedUser
 			.post('/auth/login')
 			.set('Accept', 'application/json')
@@ -236,6 +245,9 @@ describe('Should check customer user end points', () => {
 				.send(user)
 				.end((err, res) => {
 					res.should.have.status(401);
+					res.body.error.should.be.eq(
+						`Not authorized to access this route`
+					);
 					done();
 				});
 		});
@@ -250,6 +262,9 @@ describe('Should check customer user end points', () => {
 					.send(user)
 					.end((err, res) => {
 					res.should.have.status(401);
+					res.body.error.should.be.eq(
+						`Not authorized to access this route`
+					);
 						done();
 					});
 			});
@@ -262,6 +277,9 @@ describe('Should check customer user end points', () => {
 				.set({ Authorization: `Bearer ${token}` })
 				.end((err, res) => {
 					res.should.have.status(401);
+					res.body.error.should.be.eq(
+						`Not authorized to access this route`
+					);
 					done();
 				});
 					});

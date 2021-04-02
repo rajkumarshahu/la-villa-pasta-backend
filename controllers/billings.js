@@ -111,7 +111,7 @@ exports.deleteBilling = asyncHandler(async (req, res, next) => {
 
 
 // @desc      Get users within a radius
-// @route     GET /api/v1/billings/radius/:zipcode/:distance
+// @route     GET /billings/radius/:zipcode/:distance
 // @access    Private
 exports.getUsersInRadius = asyncHandler(async (req, res, next) => {
 	const { zipcode, distance } = req.params;

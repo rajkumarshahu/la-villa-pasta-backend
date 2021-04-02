@@ -23,6 +23,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.9",
     "node-geocoder": "^3.27.0",
+    "sinon": "^10.0.0",
     "swagger-jsdoc": "^5.0.1",
     "swagger-ui-express": "^4.1.5"
   },

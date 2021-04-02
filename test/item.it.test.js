@@ -2,6 +2,8 @@ let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../server');
 var request = require('supertest');
+var sinon = require('sinon');
+
 
 // Assertion type
 chai.should();
@@ -31,6 +33,7 @@ let item = {
 
 describe('Should check item end points', () => {
 	before(function (done) {
+
 		authenticatedUser
 			.post('/auth/login')
 			.set('Accept', 'application/json')
@@ -43,13 +46,13 @@ describe('Should check item end points', () => {
 			});
 	});
 
+
 	describe('GET /items', () => {
 		it('Should get all the items', (done) => {
 			chai
 				.request(server)
 				.get('/items')
 				.end((err, res) => {
-					console.log("******************",res.body.data.length)
 					res.should.have.status(200);
 					res.body.data.should.be.a('array');
 					res.body.should.be.a('object');
@@ -57,6 +60,46 @@ describe('Should check item end points', () => {
 					done();
 				});
 		});
+
+		it('Should select titles of all the items', (done) => {
+			chai
+				.request(server)
+				.get('/items?select=title')
+				.end((err, res) => {
+					res.should.have.status(200);
+					res.body.data.should.be.a('array');
+					res.body.should.be.a('object');
+					res.body.data.length.should.be.eq(res.body.count);
+					done();
+				});
+		});
+
+		it('Should sort items by title', (done) => {
+			chai
+				.request(server)
+				.get('/items/?sort=title')
+				.end((err, res) => {
+					res.should.have.status(200);
+					res.body.data.should.be.a('array');
+					res.body.should.be.a('object');
+					res.body.data.length.should.be.eq(res.body.count);
+					done();
+				});
+		});
+
+		it('Should get only 2 items in a page', (done) => {
+			chai
+				.request(server)
+				.get('/items?page=2&limit=2')
+				.end((err, res) => {
+					res.should.have.status(200);
+					res.body.data.should.be.a('array');
+					res.body.should.be.a('object');
+					res.body.data.length.should.be.eq(2);
+					done();
+				});
+		});
+
 		it('Should not get all the items', (done) => {
 			chai
 				.request(server)
@@ -70,7 +113,6 @@ describe('Should check item end points', () => {
 
 	describe('POST /items', () => {
 		it('Should create an item', (done) => {
-			//const orderId = '603923ad2e44732db5cd0a7e'
 			chai
 				.request(server)
 				.post(`/items`)
@@ -127,6 +169,68 @@ describe('Should check item end points', () => {
 					done();
 				});
 		});
+		it('Should throw error when trying to get item with wrong id', (done) => {
+			const itemId = '602ca11a1a73ee0c87a2583';
+			chai
+				.request(server)
+				.get(`/items/${itemId}`)
+				.end((err, res) => {
+					res.should.have.status(404);
+					res.body.error.should.be.eq(
+						`Resource not found.`
+					);
+					done();
+				});
+		});
+	});
+	describe('PUT /items/:id/photo', () => {
+		it('Should upload a photo of an item', (done) => {
+
+			chai
+				.request(server)
+				.put(`/items/${itemId}/photo`)
+				.set({ Authorization: `Bearer ${token}` })
+				.attach('file', './test/photo/pasta.jpg')
+				.send(item)
+				.end((err, res) => {
+					res.should.have.status(200);
+					res.body.success.should.be.eq(true);
+					done();
+				});
+		});
+
+		it('Should throw error if trying to upload photo of item that does not exist', (done) => {
+			const itemId = '5d725a037b292f5f8ceff704';
+
+			chai
+				.request(server)
+				.put(`/items/${itemId}/photo`)
+				.set({ Authorization: `Bearer ${token}` })
+				.attach('file', './test/photo/pasta.jpg')
+				.send(item)
+				.end((err, res) => {
+					res.should.have.status(404);
+					res.body.error.should.be.eq(
+						`Item not found with id of ${itemId}`);
+					done();
+				});
+		});
+
+		it('Should throw error if trying to upload file that is not photo', (done) => {
+
+			chai
+				.request(server)
+				.put(`/items/${itemId}/photo`)
+				.set({ Authorization: `Bearer ${token}` })
+				.attach('file', './test/photo/not-photo.pdf')
+				.send(item)
+				.end((err, res) => {
+					res.should.have.status(400);
+					res.body.error.should.be.eq(
+						`Please upload an image file`);
+					done();
+				});
+		});
 	});
 
 	describe('PUT /items/:id', () => {
@@ -164,6 +268,7 @@ describe('Should check item end points', () => {
 					done();
 				});
 		});
+
 	});
 
 	describe('DELETE /items/:id', () => {
@@ -193,4 +298,7 @@ describe('Should check item end points', () => {
 				});
 		});
 	});
+
+
+
 });
