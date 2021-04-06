@@ -6,6 +6,7 @@ const fileupload = require('express-fileupload');
 const cookieParser = require('cookie-parser');
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require("helmet");
+const xss = require("xss-clean");
 const connectDB = require('./config/db');
 const errorHandler = require('./middleware/error');
 const cors = require('cors');
@@ -64,6 +65,9 @@ app.use(fileupload());
 
 // Sanitize
 app.use(mongoSanitize());
+
+// Prevent Cross Site Scripting (XSS) attack
+app.use(xss());
 
 // Set security headers
 app.use(helmet());

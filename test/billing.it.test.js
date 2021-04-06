@@ -35,6 +35,7 @@ let billing = {
 
 describe('Should check billing end points', () => {
 	before(function (done) {
+
 		authenticatedUser
 			.post('/auth/login')
 			.set('Accept', 'application/json')

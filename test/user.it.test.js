@@ -35,11 +35,10 @@ let user = {
 
 describe('Should check user end points', () => {
 	before(function (done) {
-
 		sinon.stub(console, 'log')  // disable console.log
-        sinon.stub(console, 'info')  // disable console.info
-        sinon.stub(console, 'warn')  // disable console.warn
-        sinon.stub(console, 'error')  // disable console.error
+        // sinon.stub(console, 'info')  // disable console.info
+        // sinon.stub(console, 'warn')  // disable console.warn
+        //sinon.stub(console, 'error')  // disable console.error
 
 		authenticatedUser
 			.post('/auth/login')

@@ -4,7 +4,6 @@ let chaiHttp = require('chai-http');
 let server = require('../server');
 let request = require('supertest');
 
-
 // Assertion type
 chai.should();
 
@@ -26,8 +25,6 @@ const user = {
 
 describe('Should test auth endpoints', () => {
 	before(function (done) {
-
-
 
 		authenticatedUser
 			.post('/auth/login')

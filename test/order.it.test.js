@@ -93,19 +93,6 @@ describe('Should check order end points', () => {
 					done();
 				});
 		});
-
-		xit('Should not create an order without total', (done) => {
-			delete order.total;
-			chai
-				.request(server)
-				.post('/order')
-				.set({ Authorization: `Bearer ${token}` })
-				.send(order)
-				.end((err, res) => {
-					res.should.have.status(404);
-					done();
-				});
-		});
 	});
 
 	describe('GET /orders/:id', () => {

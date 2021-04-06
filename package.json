@@ -25,7 +25,8 @@
     "node-geocoder": "^3.27.0",
     "sinon": "^10.0.0",
     "swagger-jsdoc": "^5.0.1",
-    "swagger-ui-express": "^4.1.5"
+    "swagger-ui-express": "^4.1.5",
+    "xss-clean": "^0.1.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",
