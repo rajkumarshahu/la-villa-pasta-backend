@@ -4,7 +4,7 @@ info:
   title: La Villa Pasta REST API
   description: Backend REST API for La Villa Pasta to manage items, orders and users
   contact: {}
-host: https://alert-poncho-newt.cyclic.app
+host: alert-poncho-newt.cyclic.app
 basePath: /
 securityDefinitions: {}
 schemes:
